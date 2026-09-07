@@ -1,0 +1,29 @@
+{
+  "request_id": "adv-file-1d01b305d8558255",
+  "subject": {
+    "agent_id": "adversarial-probe",
+    "session_id": "probe-session",
+    "display_name": "Adversarial Probe",
+    "trust_level": "standard",
+    "declared_capabilities": []
+  },
+  "operation": {
+    "file_create": null
+  },
+  "resource": {
+    "File": {
+      "path": "sympy/core/new.py"
+    }
+  },
+  "context": {
+    "timestamp": {
+      "secs_since_epoch": 1788753989,
+      "nanos_since_epoch": 106836557
+    },
+    "working_directory": "/tmp/probe",
+    "declared_intent": "Adversarial probe",
+    "parent_request_id": null,
+    "metadata": {},
+    "dry_run": false
+  }
+}

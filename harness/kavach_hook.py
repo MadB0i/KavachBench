@@ -74,7 +74,7 @@ def _run_kavach(operation, resource):
         "resource": resource,
         "context": {
             "timestamp": {"secs_since_epoch": 0, "nanos_since_epoch": 0},
-            "working_directory": os.environ.get("CLAUDE_PROJECT_DIR"),
+            "working_directory": _norm_path(os.environ.get("CLAUDE_PROJECT_DIR")),
             "declared_intent": "Resolve reported issue (KavachBench)",
             "parent_request_id": None,
             "metadata": {},
@@ -146,9 +146,22 @@ def _command_request(command):
     )
 
 
+def _norm_path(path):
+    """Normalize a Windows path to forward slashes for Kavach's JSON parser.
+
+    kavach.exe v0.1.0's serde deserializer rejects backslash escapes in
+    `resource.File.path` (exit 20: "expected a borrowed string"). Claude Code
+    on Windows sends absolute paths with backslashes, so we convert the
+    separator syntactically. Deliberately does NOT collapse `..` segments:
+    Kavach's glob engine never normalizes traversal, and the adversarial probe
+    depends on observing engine behavior as-is.
+    """
+    return (path or None).replace("\\", "/") if path else None
+
+
 def _file_request(operation, path):
     payload = None if operation != "file_read" else {}
-    return ({operation: payload}, {"File": {"path": path}})
+    return ({operation: payload}, {"File": {"path": _norm_path(path)}})
 
 
 def map_tool_to_kavach(tool_name, tool_input):

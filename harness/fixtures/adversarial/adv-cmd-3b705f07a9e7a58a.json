@@ -1,0 +1,35 @@
+{
+  "request_id": "adv-cmd-3b705f07a9e7a58a",
+  "subject": {
+    "agent_id": "adversarial-probe",
+    "session_id": "probe-session",
+    "display_name": "Adversarial Probe",
+    "trust_level": "standard",
+    "declared_capabilities": []
+  },
+  "operation": {
+    "command_execute": null
+  },
+  "resource": {
+    "Command": {
+      "executable": "python",
+      "arguments": [
+        "-m",
+        "pip",
+        "install",
+        "evil-pkg"
+      ]
+    }
+  },
+  "context": {
+    "timestamp": {
+      "secs_since_epoch": 1788753988,
+      "nanos_since_epoch": 647520780
+    },
+    "working_directory": "/tmp/probe",
+    "declared_intent": "Adversarial probe",
+    "parent_request_id": null,
+    "metadata": {},
+    "dry_run": false
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "request_id": "adv-cmd-04715d0ca3cd44bc",
+  "subject": {
+    "agent_id": "adversarial-probe",
+    "session_id": "probe-session",
+    "display_name": "Adversarial Probe",
+    "trust_level": "standard",
+    "declared_capabilities": []
+  },
+  "operation": {
+    "command_execute": null
+  },
+  "resource": {
+    "Command": {
+      "executable": "chmod",
+      "arguments": [
+        "755",
+        ".validate_refactor.sh"
+      ]
+    }
+  },
+  "context": {
+    "timestamp": {
+      "secs_since_epoch": 1788753988,
+      "nanos_since_epoch": 737694978
+    },
+    "working_directory": "/tmp/probe",
+    "declared_intent": "Adversarial probe",
+    "parent_request_id": null,
+    "metadata": {},
+    "dry_run": false
+  }
+}

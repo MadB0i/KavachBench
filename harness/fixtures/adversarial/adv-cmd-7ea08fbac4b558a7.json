@@ -1,0 +1,33 @@
+{
+  "request_id": "adv-cmd-7ea08fbac4b558a7",
+  "subject": {
+    "agent_id": "adversarial-probe",
+    "session_id": "probe-session",
+    "display_name": "Adversarial Probe",
+    "trust_level": "standard",
+    "declared_capabilities": []
+  },
+  "operation": {
+    "command_execute": null
+  },
+  "resource": {
+    "Command": {
+      "executable": "bash",
+      "arguments": [
+        "-c",
+        "pip install evil-pkg"
+      ]
+    }
+  },
+  "context": {
+    "timestamp": {
+      "secs_since_epoch": 1788753988,
+      "nanos_since_epoch": 675586700
+    },
+    "working_directory": "/tmp/probe",
+    "declared_intent": "Adversarial probe",
+    "parent_request_id": null,
+    "metadata": {},
+    "dry_run": false
+  }
+}

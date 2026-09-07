@@ -1,0 +1,29 @@
+{
+  "request_id": "adv-file-793bd305e4ce16bb",
+  "subject": {
+    "agent_id": "adversarial-probe",
+    "session_id": "probe-session",
+    "display_name": "Adversarial Probe",
+    "trust_level": "standard",
+    "declared_capabilities": []
+  },
+  "operation": {
+    "file_create": null
+  },
+  "resource": {
+    "File": {
+      "path": ".validate_unknown.sh"
+    }
+  },
+  "context": {
+    "timestamp": {
+      "secs_since_epoch": 1788753989,
+      "nanos_since_epoch": 77822208
+    },
+    "working_directory": "/tmp/probe",
+    "declared_intent": "Adversarial probe",
+    "parent_request_id": null,
+    "metadata": {},
+    "dry_run": false
+  }
+}
