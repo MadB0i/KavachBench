@@ -116,13 +116,30 @@ def _run_kavach(operation, resource):
 
 
 def _command_request(command):
-    """Split a shell command into executable + arguments for Kavach."""
+    """Split a shell command into executable + arguments for Kavach.
+
+    Canonicalizes `python [-m] pip install ...` to executable ``pip`` so that
+    the supply-chain deny rule matches the alias.  Kavach's rule engine matches
+    on the first token (executable) only, so `python -m pip install X` would
+    otherwise map to executable ``python`` and bypass the pip deny rule.
+    """
     try:
         parts = shlex.split(command)
     except ValueError:
         parts = command.split()
     executable = parts[0] if parts else ""
     arguments = parts[1:]
+
+    # Canonicalize `python [-m] pip install ...` -> `pip install ...`
+    if (
+        executable in ("python", "python3")
+        and len(arguments) >= 3
+        and arguments[0] == "-m"
+        and arguments[1] == "pip"
+    ):
+        arguments = ["install"] + arguments[2:]
+        executable = "pip"
+
     return (
         {"command_execute": None},
         {"Command": {"executable": executable, "arguments": arguments}},

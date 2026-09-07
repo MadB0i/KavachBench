@@ -9,5 +9,6 @@ Cargo.lock
 # OS / editor
 .DS_Store
 Thumbs.db
+__MACOSX/
 .vscode/
 .idea/
