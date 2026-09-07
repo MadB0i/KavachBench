@@ -1,0 +1,10 @@
+{
+  "session_id": "feasibility-1",
+  "transcript_path": ".",
+  "cwd": "/tmp/sympy",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "chmod +x .validate_refactor.sh"
+  }
+}

@@ -1,0 +1,13 @@
+# Raw benchmark outputs (large, regenerable)
+results/*/
+!results/.gitkeep
+
+# Kavach build artifacts if vendored
+target/
+Cargo.lock
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

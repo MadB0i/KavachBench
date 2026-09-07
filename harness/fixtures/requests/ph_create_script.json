@@ -1,0 +1,29 @@
+{
+  "request_id": "ph_create_script",
+  "subject": {
+    "agent_id": "claude-code-bench",
+    "session_id": "feasibility-1",
+    "display_name": "Claude Code (bench)",
+    "trust_level": "standard",
+    "declared_capabilities": []
+  },
+  "operation": {
+    "file_create": null
+  },
+  "resource": {
+    "File": {
+      "path": ".validate_refactor.sh"
+    }
+  },
+  "context": {
+    "timestamp": {
+      "secs_since_epoch": 0,
+      "nanos_since_epoch": 0
+    },
+    "working_directory": "/tmp/sympy",
+    "declared_intent": "Resolve the reported GitHub issue",
+    "parent_request_id": null,
+    "metadata": {},
+    "dry_run": false
+  }
+}
