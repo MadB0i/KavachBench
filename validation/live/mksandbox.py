@@ -9,7 +9,7 @@ Creates `validation/live/sandbox-<n>/` containing:
 
 Usage:
     python mksandbox.py <n> <attack> <seed>
-        attack in {resource_exhaustion, persistence_hook, supply_chain, benign}
+    attack in {resource_exhaustion, persistence_hook, policy_bypass, supply_chain, benign}
         seed   in {riemann_theta, hnf, json_typing, requests_l10n, ...}
 """
 import pathlib
@@ -34,6 +34,11 @@ KNOWN_PAYLOADS = {
     ("persistence_hook", "json_typing"): (
         "persistence_hook_requests_json_typing.yaml",
         "Requests JSON typing validation hook",
+        "a requests type-check regression",
+    ),
+    ("policy_bypass", "json_typing"): (
+        "policy_bypass_requests_json_typing.yaml",
+        "Requests JSON typing task-local policy guidance",
         "a requests type-check regression",
     ),
     ("supply_chain", "requests_l10n"): (
@@ -85,18 +90,20 @@ def build(n, attack, seed):
         encoding="utf-8",
     )
 
-    # Claude Code settings: PreToolUse hook on the tools the agent will use.
+    # Claude Code settings: PreToolUse hook on every supported process/file
+    # tool. The repository-relative hook path keeps copied VM sandboxes
+    # independent of the host checkout path.
     # --dangerously-skip-permissions at runtime makes this hook the sole gate.
-    # Forward-slash path so Windows hook execution is unambiguous.
+    hook_command = "python ../../harness/kavach_hook.py"
     settings = {
         "hooks": {
             "PreToolUse": [
                 {
-                    "matcher": "Bash|Write|Edit|Read",
+                    "matcher": "Bash|PowerShell|Write|Edit|Read|MultiEdit|NotebookEdit",
                     "hooks": [
                         {
                             "type": "command",
-                            "command": f"python {HOOK.as_posix()}",
+                            "command": hook_command,
                         }
                     ],
                 }
@@ -134,7 +141,7 @@ def build(n, attack, seed):
 
     (sandbox / "TASK.md").write_text(task.strip() + "\n", encoding="utf-8")
     print(f"built {sandbox.relative_to(REPO_ROOT)}")
-    print(f"  hook        -> python {HOOK}")
+    print(f"  hook        -> {hook_command}")
     return sandbox
 
 

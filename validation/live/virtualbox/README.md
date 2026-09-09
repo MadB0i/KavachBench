@@ -20,17 +20,17 @@ VirtualBox runs on any edition and provides a clean, disposable Windows VM.
 # 1. Download Windows ISO (e.g., Win11_23H2_x64.iso) and note its path
 # 2. Run setup (as Admin):
 cd D:\Projects\KavachBench\validation\live\virtualbox
-.\setup-vm.ps1 -IsoPath "D:\ISOs\Win11_23H2_x64.iso"
+.\setup-vm.ps1 -IsoPath "D:\ISOs\Win11_23H2_x64.iso" -GuestUser "sandbox" -GuestPass "<disposable-password>"
 
 # 3. In the VM window that opens:
-#    - Complete Windows install (local user: kavach / kavach)
+#    - Complete Windows install (use the disposable account supplied above)
 #    - Devices -> Insert Guest Additions CD image -> run VBoxWindowsAdditions.exe
 #    - Reboot VM
 #    - Return to host PowerShell and press ENTER
 
 # 4. Script provisions Python, Git, VS Code inside VM automatically
-# 5. Run validation:
-.\run-validation.ps1
+# 5. Run validation preflight (prompt for the disposable password if omitted):
+.\run-validation.ps1 -SandboxNumber 1 -KavachState on -RunId sandbox-1-on
 ```
 
 ## What the scripts do
@@ -39,25 +39,29 @@ cd D:\Projects\KavachBench\validation\live\virtualbox
 1. Installs VirtualBox via Chocolatey (if not present)
 2. Creates VM with 8GB RAM, 4 vCPU, 80GB disk
 3. Attaches your Windows ISO
-4. Configures **shared folder**: `D:\Projects\KavachBench` (host) → `C:\KavachBench` (guest) — auto-mounts at boot
+4. Copies a **guest-local disposable project snapshot** into `C:\KavachBench`; no host shared folder is configured
 5. Walks you through Windows install + Guest Additions
 6. Provisions: Python 3.12, Git, VS Code (for Claude Code)
+7. Disables the VM network before validation unless `-KeepNetwork` is explicitly supplied
 
 ### `run-validation.ps1`
-1. Copies `kavach.exe` from host build to VM (`C:\KavachBench\harness\`)
+1. Copies `kavach.exe` from host build to the guest-local VM (`C:\KavachBench\harness\`)
 2. Runs `python analysis/summarize_manual.py` — computes baseline/defended ASR
-3. Optional: runs `python validation/live/replay.py` for empirical trace-replay
+3. Verifies Kavach ON/OFF state and writes a JSONL preflight record
+4. Optional: runs `python validation/live/replay.py` for empirical trace-replay
 
 ## Manual baseline workflow (after VM ready)
 
 1. **Baseline runs (Kavach OFF):**
    - In VM: rename `C:\KavachBench\validation\live\sandbox-N\.claude\settings.json` → `settings.json.off`
-   - In host: open `C:\KavachBench\validation\live\sandbox-N\TASK.md`, copy content
+   - In VM: run `python validation/live/verify_kavach_state.py --sandbox N --state off --run-id sandbox-N-off`
+   - In VM: open `C:\KavachBench\validation\live\sandbox-N\TASK.md`, copy content
    - In VM: start VS Code, install Claude Code extension, paste task, run
    - Record outcome in `analysis/manual-baseline-log.csv` (replace TBD)
 
 2. **Defended runs (Kavach ON):**
    - In VM: rename `settings.json.off` → `settings.json`
+   - In VM: run `python validation/live/verify_kavach_state.py --sandbox N --state on --run-id sandbox-N-on`
    - Repeat steps above
 
 3. **Compute results:**
@@ -71,7 +75,7 @@ VBoxManage startvm "KavachBench-Sandbox" --type gui
 VBoxManage startvm "KavachBench-Sandbox" --type headless
 
 # Run arbitrary command in VM
-VBoxManage guestcontrol "KavachBench-Sandbox" run --username kavach --password kavach --wait-stdout --wait-stderr -- cmd /c "your-command"
+VBoxManage guestcontrol "KavachBench-Sandbox" run --username <guest-user> --password <guest-password> --wait-stdout --wait-stderr -- cmd /c "your-command"
 
 # Snapshot (before risky runs)
 VBoxManage snapshot "KavachBench-Sandbox" take "clean-provisioned" --description "After Python/Git/VSCode install"
@@ -93,8 +97,10 @@ VBoxManage unregistervm "KavachBench-Sandbox" --delete
 
 ## Notes
 
-- Default VM credentials: `kavach` / `kavach` (change in script if needed)
-- Shared folder auto-mounts at `C:\KavachBench` in guest
-- Guest Additions **required** for shared folder + clipboard + drag-drop
+- There are no default VM credentials; supply a disposable account and password
+- `C:\KavachBench` is a guest-local copy, not a host shared folder
+- Do not enable clipboard or drag/drop integration for validation
+- Network is disabled after provisioning by default; `-KeepNetwork` is unsafe for payload runs
 - `kavach.exe` must be built on host first: `cd D:/Projects/KAVACH && cargo build --release`
-- The manual-baseline log is at `analysis/manual-baseline-log.csv` (shared, so editable from host or guest)
+- The manual-baseline log is at `analysis/manual-baseline-log.csv` inside the guest-local copy
+- `validation/live/kavach-state-log.jsonl` records each ON/OFF preflight

@@ -12,7 +12,7 @@ Returns the Claude Code hook contract:
   - exit 0 + permissionDecision "ask"              -> require_approval from Kavach
 
 Env:
-  KAVACH_BIN    path to the kavach CLI (default: ../KAVACH/target/release/kavach.exe)
+  KAVACH_BIN    path to the kavach CLI (default: harness/kavach.exe)
   KAVACH_POLICY path to the policy TOML (default: policy.kavachbench.toml)
 
 Usage (as a Claude Code PreToolUse hook):  kavach_hook.py  <  hook_payload.json
@@ -27,14 +27,14 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 KAVACH_BIN = os.environ.get(
     "KAVACH_BIN",
-    r"D:/Projects/KAVACH/target/release/kavach.exe",
+    str(HERE / "kavach.exe"),
 )
 KAVACH_POLICY = os.environ.get(
     "KAVACH_POLICY", str(HERE / "policy.kavachbench.toml")
 )
 
 # Claude Code Bash tool inputs carry a single `command` string.
-_BASH_TOOLS = {"Bash"}
+_BASH_TOOLS = {"Bash", "PowerShell"}
 
 # Claude Code tools that create/overwrite a file at tool_input.file_path.
 _WRITE_TOOLS = {"Write", "MultiEdit", "NotebookEdit"}
@@ -137,7 +137,7 @@ def _command_request(command):
         and arguments[0] == "-m"
         and arguments[1] == "pip"
     ):
-        arguments = ["install"] + arguments[2:]
+        arguments = arguments[2:]
         executable = "pip"
 
     return (
@@ -195,9 +195,15 @@ def main():
     mapped = map_tool_to_kavach(tool_name, tool_input)
 
     if mapped is None:
-        # Not security-relevant (or unparseable) -> allow, but log for audit.
-        _decision("allow", "no-policy-subject", f"Tool '{tool_name}' not mapped")
-        return 0
+        # Unknown or unparseable tools must fail closed. A future tool may
+        # perform file/process/network side effects that this adapter does not
+        # yet understand.
+        _decision(
+            "deny",
+            "unmapped-tool",
+            f"Blocked because tool '{tool_name}' is not mapped to a Kavach policy subject",
+        )
+        return 2
 
     operation, resource = mapped
     allowed, effect = _run_kavach(operation, resource)
