@@ -1,0 +1,51 @@
+
+> kavach-dashboard@0.1.0 test
+> vitest run --run --configLoader runner --reporter verbose
+
+
+ RUN  v3.2.7 C:/Users/vboxuser/Documents/Codex/2026-09-10/bh/work/KAVACH/dashboard
+
+ ✓ src/__tests__/auth.test.tsx > Auth Flow > shows not authenticated when no token 61ms
+ ✓ src/__tests__/auth.test.tsx > Auth Flow > login succeeds with valid token 64ms
+ ✓ src/__tests__/auth.test.tsx > Auth Flow > logout clears auth state 106ms
+ ✓ src/__tests__/navigation.test.tsx > Navigation > renders all navigation links 224ms
+ ✓ src/__tests__/navigation.test.tsx > Navigation > has working logout button 94ms
+ ✓ src/__tests__/navigation.test.tsx > Navigation > has theme toggle button 37ms
+ ✓ src/__tests__/navigation.test.tsx > Navigation > shows connection status indicator 52ms
+ ✓ src/__tests__/approval.test.tsx > PendingApprovals > renders empty state when no approvals 91ms
+ ✓ src/__tests__/approval.test.tsx > PendingApprovals > renders approval records 768ms
+ ✓ src/__tests__/approval.test.tsx > PendingApprovals > approve action calls correct API 263ms
+ ✓ src/__tests__/approval.test.tsx > PendingApprovals > deny shows confirm dialog with reason 149ms
+ ✓ src/__tests__/theme.test.tsx > ThemeContext > uses light theme when no preference 59ms
+ ✓ src/__tests__/theme.test.tsx > ThemeContext > uses dark theme when system prefers dark 15ms
+ ✓ src/__tests__/theme.test.tsx > ThemeContext > toggles theme correctly 44ms
+ ✓ src/__tests__/theme.test.tsx > ThemeContext > persists theme to localStorage 15ms
+ ✓ src/__tests__/theme.test.tsx > ThemeContext > reads theme from localStorage 13ms
+ ✓ src/__tests__/theme.test.tsx > ThemeContext > sets data-theme attribute on document 5ms
+ ✓ src/__tests__/audit.test.tsx > AuditTimeline > renders audit events 174ms
+ ✓ src/__tests__/audit.test.tsx > AuditTimeline > shows empty state when no events 61ms
+ ✓ src/__tests__/audit.test.tsx > AuditTimeline > handles error state 47ms
+ ✓ src/__tests__/api.test.ts > API Module > setAuthToken and clearAuthToken work 2ms
+ ✓ src/__tests__/api.test.ts > API Module > fetchApi adds auth headers 5ms
+ ✓ src/__tests__/api.test.ts > API Module > fetchApi handles errors correctly 2ms
+ ✓ src/__tests__/api.test.ts > API Module > fetchApi throws on HTTP errors 0ms
+ ✓ src/__tests__/api.test.ts > API Module > fetchApi returns 401 error 1ms
+ ✓ src/__tests__/api.test.ts > API Module > getHealth calls correct endpoint 1ms
+ ✓ src/__tests__/api.test.ts > API Module > getReady calls correct endpoint 1ms
+ ✓ src/__tests__/api.test.ts > API Module > getApprovals calls correct endpoint 1ms
+ ✓ src/__tests__/api.test.ts > API Module > approveApproval sends correct body 1ms
+ ✓ src/__tests__/api.test.ts > API Module > denyApproval sends reason when provided 1ms
+ ✓ src/__tests__/api.test.ts > API Module > getAuditEvents builds query params 1ms
+ ✓ src/__tests__/api.test.ts > API Module > verifyAudit sends POST 1ms
+ ✓ src/__tests__/api.test.ts > API Module > reloadPolicies sends policy_paths 1ms
+ ✓ src/__tests__/api.test.ts > API Module > getApproval calls correct endpoint 1ms
+ ✓ src/__tests__/sensitive.test.tsx > Sensitive Data Handling > API error messages do not contain raw tokens 5ms
+ ✓ src/__tests__/sensitive.test.tsx > Sensitive Data Handling > token is not stored in localStorage 1ms
+ ✓ src/__tests__/sensitive.test.tsx > Sensitive Data Handling > token is in sessionStorage not localStorage 1ms
+ ✓ src/__tests__/sensitive.test.tsx > Sensitive Data Handling > approval summaries are truncated 1ms
+
+ Test Files  7 passed (7)
+      Tests  38 passed (38)
+   Start at  17:24:10
+   Duration  51.52s (transform 3.47s, setup 21.01s, collect 19.16s, tests 2.38s, environment 98.69s, prepare 5.81s)
+

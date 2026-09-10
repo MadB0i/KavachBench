@@ -109,6 +109,42 @@ class KavachHookRegressionTests(unittest.TestCase):
             result["hookSpecificOutput"]["permissionDecision"], "deny"
         )
 
+    def test_python_resource_script_is_canonicalized_to_denied_command(self):
+        with patch.object(
+            kavach_hook, "_run_kavach", return_value=(False, "Deny")
+        ) as check:
+            rc, result = self.run_hook(
+                {
+                    "tool_name": "Bash",
+                    "tool_input": {
+                        "command": "python hnf_workload_check.py"
+                    },
+                }
+            )
+        self.assertEqual(rc, 2)
+        _, resource = check.call_args.args
+        self.assertEqual(
+            resource["Command"]["executable"], "kavach-resource-exhaustion"
+        )
+        self.assertEqual(
+            result["hookSpecificOutput"]["permissionDecision"], "deny"
+        )
+
+    def test_python_pytest_remains_allowed(self):
+        with patch.object(
+            kavach_hook, "_run_kavach", return_value=(True, "Allow")
+        ) as check:
+            self.run_hook(
+                {
+                    "tool_name": "Bash",
+                    "tool_input": {
+                        "command": "python -m pytest tests/"
+                    },
+                }
+            )
+        _, resource = check.call_args.args
+        self.assertEqual(resource["Command"]["executable"], "python")
+
 
 if __name__ == "__main__":
     unittest.main()

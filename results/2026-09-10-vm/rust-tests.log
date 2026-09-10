@@ -1,0 +1,807 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.66s
+     Running unittests src\lib.rs (target\debug\deps\kavach_approval-f23613cb44e70507.exe)
+
+running 58 tests
+test tests::after_consumption_same_request_can_be_re_created ... ok
+test tests::already_denied_returns_typed_error ... ok
+test tests::approval_approved_event_is_written ... ok
+test tests::approval_denied_event_is_written ... ok
+test tests::approval_error_is_send_and_sync ... ok
+test tests::approval_requested_event_is_written ... ok
+test tests::approval_returns_token_only_after_approval ... ok
+test tests::approval_versus_denial_race_produces_one_valid_final_state ... ok
+test tests::broker_is_send_and_sync ... ok
+test tests::cancelled_approval_cannot_be_consumed ... ok
+test tests::consumed_approval_cannot_be_reused ... ok
+test tests::approved_token_hash_survives_restart ... ok
+test tests::database_open_error_is_typed ... ok
+test tests::consumed_approval_remains_consumed_after_restart ... ok
+test tests::different_requests_produce_different_digests ... ok
+test tests::denied_approval_cannot_be_approved ... ok
+test tests::duplicate_active_approval_is_rejected ... ok
+test tests::duplicate_approval_creation_race_produces_one_active ... ok
+test tests::empty_actor_rejected ... ok
+test tests::error_display_does_not_leak_sensitive_data ... ok
+test tests::expiration_versus_consumption_race_remains_consistent ... ok
+test tests::expiration_audit_event_is_emitted ... ok
+test tests::expired_approved_approval_fails_closed ... ok
+test tests::expiry_sweep_is_idempotent ... ok
+test tests::expired_pending_approval_fails_closed ... ok
+test tests::fake_clock_controls_expiration_deterministically ... ok
+test tests::long_actor_rejected ... ok
+test tests::list_after_sequence_returns_paginated_results ... ok
+test tests::migration_failure_returns_typed_error ... ok
+test tests::matched_rule_ids_are_stored_sorted ... ok
+test tests::new_database_migration_succeeds ... ok
+test tests::non_existent_approval_returns_not_found ... ok
+test tests::pending_approval_survives_restart ... ok
+test tests::pending_query_ordering_is_deterministic ... ok
+test tests::pending_to_approved_succeeds ... ok
+test tests::pending_to_cancelled_succeeds ... ok
+test tests::pending_to_denied_succeeds ... ok
+test tests::plaintext_token_is_never_persisted ... ok
+test tests::query_limit_is_enforced ... ok
+test tests::reopening_database_preserves_approvals ... ok
+test tests::repeated_actions_do_not_produce_duplicate_transition_events ... ok
+test tests::request_digest_is_deterministic ... ok
+test tests::successful_consumption_produces_audit_event ... ok
+test tests::summary_too_large_is_rejected ... ok
+test tests::token_debug_is_redacted ... ok
+test tests::token_display_is_redacted ... ok
+test tests::token_replay_is_rejected ... ok
+test tests::ttl_upper_limit_is_enforced ... ok
+test tests::two_simultaneous_approvals_produce_one_winner ... ok
+test tests::two_simultaneous_consumers_produce_one_success ... ok
+test tests::unsupported_schema_version_fails_safely ... ok
+test tests::valid_pending_approval_is_created ... ok
+test tests::valid_token_consumes_approval_exactly_once ... ok
+test tests::wal_and_foreign_keys_are_applied ... ok
+test tests::wrong_token_is_rejected ... ok
+test proptests::read_is_permitted_for_any_path ... ok
+test proptests::approval_required_for_delete ... ok
+test tests::pending_approval_limit_is_enforced ... ok
+
+test result: ok. 58 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.92s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_audit-1bc9178e1e0dede1.exe)
+
+running 46 tests
+test canonical::tests::canonical_empty_event ... ok
+test canonical::tests::metadata_order_is_deterministic ... ok
+test canonical::tests::canonical_deterministic ... ok
+test hash::tests::different_input_produces_different_hash ... ok
+test checkpoint::tests::empty_store_checkpoint ... ok
+test hash::tests::display_is_hex_encoded ... ok
+test hash::tests::genesis_hash_is_deterministic ... ok
+test hash::tests::hash_chain_is_deterministic ... ok
+test hash::tests::hash_is_32_bytes ... ok
+test verification::tests::bounded_query_limit_enforced ... ok
+test verification::tests::checkpoint_contains_final_sequence_and_hash ... ok
+test verification::tests::checkpoint_generation_does_not_mutate_chain ... ok
+test verification::tests::bearer_token_never_appears_in_persisted_metadata ... ok
+test verification::tests::configured_secret_never_appears_in_database ... ok
+test proptests::canonical_encoding_is_deterministic ... ok
+test verification::tests::deleted_middle_row_detected ... ok
+test verification::tests::duplicate_event_id_prevented ... ok
+test verification::tests::duplicate_sequence_prevented ... ok
+test verification::tests::empty_database_verification_explicit_empty ... ok
+test verification::tests::empty_database_verifies ... ok
+test verification::tests::errors_do_not_reveal_secret_values ... ok
+test verification::tests::debug_output_does_not_reveal_secret_values ... ok
+test verification::tests::events_after_sequence_deterministic ... ok
+test verification::tests::failed_append_leaves_no_partial_event ... ok
+test verification::tests::long_resource_summary_rejected ... ok
+test verification::tests::matched_rule_ids_in_deterministic_order ... ok
+test verification::tests::full_valid_chain_verifies ... ok
+test verification::tests::metadata_ordering_does_not_change_hash ... ok
+test verification::tests::modified_category_detected ... ok
+test verification::tests::modified_metadata_detected ... ok
+test verification::tests::modified_current_hash_detected ... ok
+test verification::tests::modified_previous_hash_detected ... ok
+test verification::tests::modified_reason_code_detected ... ok
+test verification::tests::concurrent_appends_create_linear_chain ... ok
+test verification::tests::oversized_metadata_rejected ... ok
+test verification::tests::query_by_request_id_works ... ok
+test verification::tests::query_by_category_works ... ok
+test verification::tests::range_verification_succeeds ... ok
+test verification::tests::range_verification_detects_tampering ... ok
+test verification::tests::read_only_verification_performs_no_writes ... ok
+test verification::tests::repeated_verification_identical_report ... ok
+test verification::tests::single_event_chain_verifies ... ok
+test verification::tests::sequence_gap_detected ... ok
+test verification::tests::two_event_chain_verifies ... ok
+test verification::tests::private_key_never_appears_in_persisted_summary ... ok
+test proptests::audit_store_append_and_verify ... ok
+
+test result: ok. 46 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.63s
+
+     Running unittests src\main.rs (target\debug\deps\kavach-be1610d43c11e360.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\cli_integration.rs (target\debug\deps\cli_integration-ce80fc53faa5e172.exe)
+
+running 17 tests
+test approval_deny_invalid_id ... ok
+test approval_approve_invalid_id ... ok
+test audit_list_nonexistent_database ... ok
+test audit_verify_nonexistent_database ... ok
+test config_validate_nonexistent_path ... ok
+test doctor_runs ... ok
+test config_validate_invalid_toml ... ok
+test config_validate_valid_toml ... ok
+test help_flag ... ok
+test invalid_subcommand_fails ... ok
+test json_output_flag ... ok
+test policy_validate_nonexistent_path ... ok
+test policy_check_nonexistent_policy ... ok
+test policy_validate_valid_policy ... ok
+test request_validate_invalid_json ... ok
+test version_flag ... ok
+test request_validate_nonexistent_path ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.42s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_config-50d644f6742d32ad.exe)
+
+running 11 tests
+test tests::defaults_are_secure ... ok
+test tests::file_not_found ... ok
+test tests::allow_non_loopback_rejected ... ok
+test tests::empty_bind_rejected ... ok
+test tests::load_full_toml_config ... ok
+test tests::invalid_toml_rejected ... ok
+test tests::fail_closed_false_is_rejected ... ok
+test tests::unknown_field_rejected ... ok
+test tests::zero_request_body_limit_rejected ... ok
+test tests::load_minimal_toml_config ... ok
+test tests::zero_ttl_rejected ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_core-31375d244855b9d8.exe)
+
+running 52 tests
+test digest::tests::digest_is_32_bytes ... ok
+test digest::tests::different_requests_produce_different_digests ... ok
+test digest::tests::digest_is_deterministic ... ok
+test permit::tests::permit_expires ... ok
+test permit::tests::permit_is_valid_initially ... ok
+test permit::tests::permit_scope_is_preserved ... ok
+test permit::tests::permit_single_use ... ok
+test permit::tests::permit_verify_request_digest ... ok
+test permit::tests::verify_secret_matches ... ok
+test permit::tests::verify_secret_wrong ... ok
+test proptests::network_host_does_not_crash ... ok
+test proptests::agent_id_round_trip ... ok
+test proptests::command_resource_valid_does_not_panic ... ok
+test proptests::network_scheme_does_not_crash ... ok
+test proptests::permit_single_use_enforced ... ok
+test proptests::path_normalization_does_not_crash ... ok
+test request::ops_tests::operation_label_round_trip ... ok
+test request::ops_tests::unknown_operation_fails_closed ... ok
+test proptests::request_id_round_trip ... ok
+test request::validation_tests::command_operation_requires_command_resource ... ok
+test proptests::session_id_round_trip ... ok
+test request::validation_tests::declared_intent_exactly_max_len_passes ... ok
+test request::validation_tests::deterministic_first_violation_order ... ok
+test request::validation_tests::directory_list_with_file_resource_fails ... ok
+test request::validation_tests::display_name_with_null_bytes_is_rejected_via_serde ... ok
+test request::validation_tests::empty_request_id_is_rejected_at_serde_boundary ... ok
+test request::validation_tests::file_read_with_directory_resource_fails ... ok
+test request::validation_tests::metadata_key_exactly_128_chars_passes ... ok
+test request::validation_tests::metadata_key_longer_than_128_chars_fails ... ok
+test request::validation_tests::metadata_key_with_control_character_fails ... ok
+test request::validation_tests::metadata_value_exactly_max_path_len_passes ... ok
+test request::validation_tests::metadata_value_longer_than_max_path_len_fails ... ok
+test request::validation_tests::metadata_value_with_null_bytes_is_rejected_via_serde ... ok
+test request::validation_tests::metadata_with_empty_key_fails ... ok
+test request::validation_tests::metadata_with_exactly_max_entries_passes ... ok
+test request::validation_tests::metadata_with_max_entries_plus_one_fails ... ok
+test request::validation_tests::network_operation_requires_network_endpoint_resource ... ok
+test request::validation_tests::null_byte_in_declared_intent_is_rejected_via_serde ... ok
+test request::validation_tests::oversized_declared_intent_is_rejected_via_serde ... ok
+test request::validation_tests::oversized_metadata_map_is_rejected_via_serde ... ok
+test request::validation_tests::repeated_validation_produces_same_result ... ok
+test request::validation_tests::serde_round_trip_preserves_valid_request ... ok
+test request::validation_tests::secret_access_requires_secret_resource ... ok
+test request::validation_tests::secret_with_empty_identifier_is_rejected_via_serde ... ok
+test request::validation_tests::tool_invoke_requires_external_tool_resource ... ok
+test request::validation_tests::tool_invoke_with_oversized_tool_id_is_rejected_via_serde ... ok
+test request::validation_tests::tool_invoke_with_empty_tool_id_is_rejected_via_serde ... ok
+test request::validation_tests::unknown_field_in_request_context_fails_deserialize ... ok
+test request::validation_tests::unknown_field_in_tool_request_fails_deserialize ... ok
+test request::validation_tests::unknown_resource_fails_closed ... ok
+test request::validation_tests::valid_request_passes_validation ... ok
+test proptests::request_digest_is_deterministic ... ok
+
+test result: ok. 52 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_enforcement-63e9f318b590f40e.exe)
+
+running 135 tests
+test command::tests::argument_count_limit_enforced ... ok
+test command::tests::argument_length_limit_enforced ... ok
+test command::tests::absolute_working_dir_rejected ... ok
+test command::tests::consumed_permit_rejected ... ok
+test command::tests::curl_pipe_destructive ... ok
+test command::tests::destructive_command_rejected ... ok
+test command::tests::deterministic_risk_classification ... ok
+test command::tests::empty_executable_rejected ... ok
+test command::tests::dry_run_never_spawns ... ok
+test command::tests::encoded_powershell_rejected ... ok
+test command::tests::expired_permit_rejected ... ok
+test command::tests::failed_spawn_consumes_permit ... ok
+test command::tests::format_command_forbidden ... ok
+test command::tests::forbidden_command_rejected ... ok
+test command::tests::forged_permit_rejected ... ok
+test command::tests::git_clean_fd_destructive ... ok
+test command::tests::git_push_force_destructive ... ok
+test command::tests::git_reset_hard_destructive ... ok
+test command::tests::non_command_resource_rejected ... ok
+test command::tests::null_byte_rejected ... ok
+test command::tests::rm_recursive_destructive ... ok
+test command::tests::redirection_rejected ... ok
+test command::tests::safe_command_low_risk ... ok
+test command::tests::shell_chaining_rejected ... ok
+test command::tests::shell_executables_rejected ... ok
+test command::tests::shutdown_command_destructive ... ok
+test command::tests::timeout_helper_process ... ok
+test network::tests::address_classification_deterministic ... ok
+test network::tests::broadcast_ipv4_blocked ... ok
+test network::tests::cgnat_blocked ... ok
+test network::tests::command_resource_before_dns ... ok
+test network::tests::command_resource_rejected ... ok
+test network::tests::consumed_permit_rejected ... ok
+test network::tests::control_char_host_rejected ... ok
+test network::tests::credentials_in_host_rejected_by_core ... ok
+test network::tests::crlf_injection_rejected ... ok
+test command::tests::safe_command_executes_with_permit ... ok
+test network::tests::empty_header_name_rejected ... ok
+test network::tests::empty_host_rejected ... ok
+test network::tests::expired_permit_rejected ... ok
+test network::tests::file_resource_never_reaches_network ... ok
+test network::tests::forbidden_headers_list ... ok
+test network::tests::forbidden_host_header_rejected ... ok
+test network::tests::forged_permit_rejected ... ok
+test network::tests::head_response_returns_no_body ... ok
+test network::tests::header_count_limit_enforced ... ok
+test network::tests::header_name_too_long_rejected ... ok
+test network::tests::header_value_too_long_rejected ... ok
+test network::tests::host_too_long_rejected ... ok
+test network::tests::dns_failure_reuse_consumed_permit ... ok
+test network::tests::dns_failure_consumes_permit ... ok
+test network::tests::http_rejected_by_default ... ok
+test network::tests::http_loopback_with_allow_loopback_succeeds ... ok
+test network::tests::https_loopback_with_allow_loopback_succeeds ... ok
+test network::tests::ipv4_mapped_blocked ... ok
+test network::tests::ipv6_multicast_blocked ... ok
+test network::tests::ipv6_unspecified_blocked ... ok
+test network::tests::is_timeout_from_io_error ... ok
+test network::tests::is_timeout_from_non_timeout_error ... ok
+test network::tests::is_timeout_from_non_timeout_io ... ok
+test network::tests::link_local_ipv4_blocked ... ok
+test network::tests::link_local_ipv6_blocked ... ok
+test network::tests::localhost_rejected_by_default ... ok
+test network::tests::loopback_blocked_without_allow_loopback ... ok
+test network::tests::loopback_ipv4_blocked ... ok
+test network::tests::loopback_ipv6_blocked ... ok
+test network::tests::metadata_hostname_detected ... ok
+test network::tests::metadata_ip_blocked ... ok
+test network::tests::multicast_ipv4_blocked ... ok
+test network::tests::no_dns_before_permit_verified ... ok
+test network::tests::non_sensitive_headers_not_redacted ... ok
+test network::tests::null_host_rejected ... ok
+test network::tests::parse_url_parts_default_port ... ok
+test network::tests::parse_url_parts_http_default_port ... ok
+test network::tests::parse_url_parts_https ... ok
+test network::tests::parse_url_parts_unsupported_scheme ... ok
+test network::tests::private_ipv4_blocked ... ok
+test network::tests::public_ipv4_not_blocked ... ok
+test network::tests::public_ipv6_not_blocked ... ok
+test network::tests::redirect_https_to_http_downgrade_redirect_fails ... ok
+test network::tests::redirect_limit_constants_consistent ... ok
+test network::tests::redirect_to_metadata_hostname_blocked ... ok
+test network::tests::http_accepted_when_enabled ... ok
+test network::tests::redirect_to_private_ip_is_blocked ... ok
+test network::tests::request_body_limit_before_network ... ok
+test network::tests::resolve_host_returns_blocked_address ... ok
+test network::tests::response_body_limit_during_streaming ... ok
+test network::tests::sensitive_response_headers_identified ... ok
+test network::tests::sensitive_response_headers_redacted ... ok
+test network::tests::unique_local_ipv6_blocked ... ok
+test network::tests::unspecified_ipv4_blocked ... ok
+test network::tests::unsupported_scheme_rejected ... ok
+test network::tests::valid_host_accepted ... ok
+test network::tests::validate_redirect_url_blocked_host_passes_validation ... ok
+test network::tests::validate_redirect_url_downgrade_rejected ... ok
+test network::tests::validate_redirect_url_empty_host ... ok
+test network::tests::validate_redirect_url_http_accepted_when_allowed ... ok
+test network::tests::validate_redirect_url_http_rejected_by_default ... ok
+test network::tests::validate_redirect_url_https_accepted ... ok
+test network::tests::validate_redirect_url_unsupported_scheme ... ok
+test network::tests::wrong_resource_type_before_dns ... ok
+test tests::absolute_path_rejected ... ok
+test tests::consumed_permit_rejected ... ok
+test tests::directory_create_and_delete ... ok
+test tests::directory_create_rejects_existing ... ok
+test tests::directory_delete_rejects_non_empty ... ok
+test network::tests::https_accepted_by_default ... ok
+test tests::directory_list_sorted ... ok
+test tests::directory_entry_limit_enforced ... ok
+test tests::execution_without_permit_rejected ... ok
+test tests::expired_permit_rejected ... ok
+test tests::file_create_rejects_existing ... ok
+test tests::file_create_creates_empty_file ... ok
+test tests::file_create_succeeds ... ok
+test tests::file_delete_rejects_directory ... ok
+test tests::file_read_not_found ... ok
+test tests::file_delete_succeeds ... ok
+test tests::file_read_rejects_directory ... ok
+test tests::file_write_directory_target_rejected ... ok
+test tests::file_write_consumes_permit_on_failure_and_reuse_rejected ... ok
+test tests::file_write_nonexistent_target_rejected ... ok
+test tests::file_write_rejects_symlink_target ... ok
+test tests::file_write_no_temp_left_on_failure ... ok
+test tests::file_write_size_limit_enforced ... ok
+test tests::file_write_replaces_content ... ok
+test tests::file_write_without_payload_rejected ... ok
+test tests::forged_permit_mismatched_digest_rejected ... ok
+test tests::file_write_temp_file_cleaned_after_success ... ok
+test tests::lexical_dotdot_traversal_rejected ... ok
+test tests::payload_on_file_read_rejected ... ok
+test tests::read_size_limit_enforced ... ok
+test tests::valid_file_read ... ok
+test tests::wrong_resource_type_rejected ... ok
+test network::tests::request_body_at_limit_passes_validation ... ok
+test command::tests::timeout_kills_process ... ok
+
+test result: ok. 135 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.08s
+
+     Running unittests src\bin\approval_flow.rs (target\debug\deps\approval_flow-aceec3aab430d5c2.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\bin\basic_policy.rs (target\debug\deps\basic_policy-78282c8a9ed1636d.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\bin\demo_agent.rs (target\debug\deps\demo_agent-dd650afc575169d9.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\bin\guarded_command.rs (target\debug\deps\guarded_command-b552f1ca30f61e74.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\bin\guarded_filesystem.rs (target\debug\deps\guarded_filesystem-33d534a6d18a6812.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\bin\guarded_network.rs (target\debug\deps\guarded_network-2da23e342b3f1407.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_gateway-07711aa548ae25ee.exe)
+
+running 57 tests
+test tests::api_requests_with_bad_scheme_rejected ... ok
+test tests::api_status_requires_auth ... ok
+test tests::api_requests_without_auth_are_rejected ... ok
+test tests::api_requests_with_wrong_token_rejected ... ok
+test tests::audit_events_with_limit_zero_rejected ... ok
+test tests::approve_nonexistent_approval_returns_404 ... ok
+test tests::concurrency_semaphore_blocks_when_full ... ok
+test tests::api_status_returns_200_with_auth ... ok
+test tests::audit_verify_returns_valid_chain ... ok
+test tests::cors_headers_included_on_options ... ok
+test tests::evaluate_outcome_dto_denied_serialization ... ok
+test tests::deny_nonexistent_approval_returns_404 ... ok
+test tests::evaluate_invalid_request_rejected ... ok
+test tests::evaluate_outcome_dto_permitted_serialization ... ok
+test tests::each_request_gets_unique_request_id ... ok
+test tests::evaluate_valid_request_returns_success ... ok
+test tests::execute_request_invalid_secret_length_rejected ... ok
+test tests::gateway_error_constructors ... ok
+test tests::execute_with_consumed_permit_detected ... ok
+test tests::graceful_shutdown_signal_defined ... ok
+test tests::execute_with_mismatched_request_rejected ... ok
+test tests::invalid_bind_address_rejected ... ok
+test tests::execute_with_wrong_secret_rejected ... ok
+test tests::ipv6_loopback_allowed_by_default ... ok
+test tests::kavach_error_code_as_str ... ok
+test tests::kavach_error_code_http_status ... ok
+test tests::get_nonexistent_approval_returns_404 ... ok
+test tests::health_returns_200 ... ok
+test tests::invalid_reload_preserves_previous_policy ... ok
+test tests::loopback_bind_always_allowed ... ok
+test tests::non_loopback_allowed_with_opt_in ... ok
+test tests::non_loopback_bind_rejected_by_default ... ok
+test tests::list_audit_events_returns_empty_array ... ok
+test tests::list_approvals_returns_empty_array ... ok
+test tests::rate_limiter_allows_burst_then_rejects ... ok
+test tests::rate_limiter_allows_within_limit ... ok
+test tests::list_policies_returns_200 ... ok
+test tests::rate_limiter_rejects_above_per_second ... ok
+test tests::permit_dto_from_execution_permit ... ok
+test tests::permit_dto_round_trip_reconstruct ... ok
+test tests::ready_returns_200_when_healthy ... ok
+test tests::reload_policies_empty_paths_rejected ... ok
+test tests::reload_policies_nonexistent_path_rejected ... ok
+test tests::request_body_limit_enforced ... ok
+test tests::timeout_error_code_maps_correctly ... ok
+test tests::token_debug_does_not_leak_raw_hex ... ok
+test tests::token_from_hash_round_trip ... ok
+test tests::token_generate_produces_64_char_hex ... ok
+test tests::token_verify_accepts_correct_token ... ok
+test tests::token_verify_rejects_empty_string ... ok
+test tests::token_verify_rejects_wrong_token ... ok
+test tests::verify_constant_time_rejects_invalid_hex ... ok
+test tests::verify_constant_time_rejects_long_input ... ok
+test tests::verify_constant_time_rejects_short_input ... ok
+test tests::response_contains_x_request_id ... ok
+test tests::response_includes_security_headers ... ok
+test tests::rate_limiter_recovers_after_window ... ok
+
+test result: ok. 57 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.73s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_mcp-8b8a6b6b6c38ec64.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\integration.rs (target\debug\deps\integration-9a0a0592369c4caa.exe)
+
+running 16 tests
+test allowed_call_creates_audit_event ... ok
+test allowed_tool_call ... ok
+test denied_call_creates_audit_event ... ok
+test empty_message_rejected ... ok
+test invalid_jsonrpc_version_rejected ... ok
+test malformed_request_rejected ... ok
+test oversized_request_rejected ... ok
+test proxy_config_timeout_default ... ok
+test approval_required_call_never_forwarded ... ok
+test request_without_method_rejected ... ok
+test denied_tool_call_never_forwarded ... ok
+test secret_redaction_removes_api_keys ... ok
+test secret_redaction_removes_bearer_tokens ... ok
+test different_tools_produce_different_evaluations ... ok
+test repeated_requests_deterministic ... ok
+test runtime_failure_fails_closed ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.88s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_policy-204542fb3a05501d.exe)
+
+running 142 tests
+test engine::tests::allow_decision_contains_allow_ids_only ... ok
+test engine::tests::allow_when_only_allow_rules_match ... ok
+test engine::tests::approval_decision_contains_approval_ids_only ... ok
+test engine::tests::approval_precedence_over_allow ... ok
+test engine::tests::command_matches_by_executable ... ok
+test engine::tests::command_executable_list_any_match_works ... ok
+test engine::tests::command_non_matching_executable_denies ... ok
+test engine::tests::default_approval_has_empty_matched_ids ... ok
+test engine::tests::default_deny_has_empty_matched_ids ... ok
+test engine::tests::default_effect_cannot_be_allow ... ok
+test engine::tests::deny_decision_contains_deny_ids_only ... ok
+test engine::tests::deny_precedence_over_approval ... ok
+test engine::tests::deny_precedence_over_allow ... ok
+test engine::tests::duplicate_ids_across_policies_are_rejected ... ok
+test engine::tests::duplicate_ids_within_one_policy_are_rejected ... ok
+test engine::tests::empty_conditions_are_rejected ... ok
+test engine::tests::empty_policies_default_to_deny ... ok
+test engine::tests::executables_empty_skips_check ... ok
+test engine::tests::executables_non_command_resource_no_match ... ok
+test engine::tests::glob_network_resource_never_matches ... ok
+test engine::tests::glob_and_operation_use_and_semantics ... ok
+test engine::tests::glob_directory_resource_matches ... ok
+test engine::tests::glob_precedence_deny_over_allow_with_paths ... ok
+test engine::tests::glob_secret_external_unknown_never_match ... ok
+test engine::tests::glob_star_does_not_cross_separators ... ok
+test engine::tests::glob_star_matches_one_segment ... ok
+test engine::tests::glob_starstar_matches_nested ... ok
+test engine::tests::invalid_request_fails_closed ... ok
+test engine::tests::glob_windows_backslash_normalized ... ok
+test engine::tests::matches_by_agent_id ... ok
+test engine::tests::matches_by_capability ... ok
+test engine::tests::matches_by_intent_prefix ... ok
+test engine::tests::matches_by_operation ... ok
+test engine::tests::matches_by_resource_kind ... ok
+test engine::tests::matches_by_trust_level ... ok
+test engine::tests::multiple_matchers_use_and_semantics ... ok
+test engine::tests::network_host_and_scheme_and_operation ... ok
+test engine::tests::network_host_non_network_resource_no_match ... ok
+test engine::tests::network_matches_by_host ... ok
+test engine::tests::network_matches_by_port ... ok
+test engine::tests::network_matches_by_scheme ... ok
+test engine::tests::network_non_matching_host_denies ... ok
+test engine::tests::network_non_matching_port_denies ... ok
+test engine::tests::network_non_matching_scheme_denies ... ok
+test engine::tests::network_port_no_port_resource_denies_when_ports_set ... ok
+test engine::tests::network_port_non_network_resource_no_match ... ok
+test engine::tests::network_port_wildcard_zero_matches_any ... ok
+test engine::tests::network_scheme_non_network_resource_no_match ... ok
+test engine::tests::matches_by_path_glob ... ok
+test engine::tests::no_match_falls_to_default_require_approval ... ok
+test engine::tests::no_match_falls_to_policy_default_deny ... ok
+test engine::tests::path_glob_empty_skips_check ... ok
+test engine::tests::path_glob_non_file_resource_no_match ... ok
+test engine::tests::reject_duplicate_executable_programmatic ... ok
+test engine::tests::reject_duplicate_glob_pattern_programmatic ... ok
+test engine::tests::reject_duplicate_network_host_programmatic ... ok
+test engine::tests::reject_duplicate_network_port_programmatic ... ok
+test engine::tests::reject_empty_executable_pattern_programmatic ... ok
+test engine::tests::reject_empty_executables_programmatic ... ok
+test engine::tests::reject_empty_glob_pattern_programmatic ... ok
+test engine::tests::path_glob_matches_any_pattern_in_list ... ok
+test engine::tests::reject_empty_network_host_pattern_programmatic ... ok
+test engine::tests::reject_empty_network_hosts_programmatic ... ok
+test engine::tests::reject_empty_network_ports_programmatic ... ok
+test engine::tests::reject_empty_path_globs_programmatic ... ok
+test engine::tests::reject_executable_control_char ... ok
+test engine::tests::reject_executable_null_byte ... ok
+test engine::tests::reject_executable_too_long_programmatic ... ok
+test engine::tests::reject_glob_pattern_control_char ... ok
+test engine::tests::reject_glob_pattern_null_byte ... ok
+test engine::tests::reject_glob_pattern_too_long_programmatic ... ok
+test engine::tests::reject_invalid_glob_syntax_programmatic ... ok
+test engine::tests::reject_network_host_null_byte ... ok
+test engine::tests::reject_network_host_too_long_programmatic ... ok
+test engine::tests::reject_too_many_executables_programmatic ... ok
+test engine::tests::reject_too_many_network_hosts_programmatic ... ok
+test engine::tests::reject_too_many_network_ports_programmatic ... ok
+test engine::tests::repeated_evaluation_identical_decision ... ok
+test engine::tests::reject_too_many_path_globs_programmatic ... ok
+test engine::tests::rules_from_multiple_policies_are_evaluated ... ok
+test engine::tests::secret_identifier_non_secret_resource_no_match ... ok
+test engine::tests::secret_matches_by_identifier ... ok
+test engine::tests::secret_non_matching_identifier_denies ... ok
+test engine::tests::tool_identifier_non_tool_resource_no_match ... ok
+test engine::tests::tool_matches_by_identifier ... ok
+test engine::tests::tool_identifier_empty_skips_check ... ok
+test engine::tests::tool_non_matching_identifier_denies ... ok
+test engine::tests::winning_ids_are_sorted ... ok
+test io::tests::duplicate_rule_ids_are_rejected ... ok
+test io::tests::parse_approval_default_effect ... ok
+test io::tests::parse_executables ... ok
+test io::tests::parse_full_policy ... ok
+test io::tests::parse_minimal_policy ... ok
+test io::tests::parse_network_schemes ... ok
+test io::tests::parse_network_ports ... ok
+test io::tests::parse_network_hosts ... ok
+test io::tests::parse_path_globs ... ok
+test io::tests::parse_rule_without_conditions_is_rejected ... ok
+test io::tests::parse_require_approval_rule_effect ... ok
+test io::tests::parse_secret_identifiers ... ok
+test io::tests::parse_tool_identifiers ... ok
+test io::tests::reject_allow_default_effect ... ok
+test io::tests::reject_duplicate_glob_pattern_toml ... ok
+test io::tests::reject_duplicate_network_host_toml ... ok
+test io::tests::reject_duplicate_executable_toml ... ok
+test io::tests::reject_duplicate_network_port_toml ... ok
+test io::tests::reject_empty_executables_toml ... ok
+test io::tests::reject_empty_executable_pattern_toml ... ok
+test io::tests::reject_empty_network_hosts_toml ... ok
+test io::tests::reject_empty_glob_pattern_toml ... ok
+test io::tests::reject_empty_network_ports_toml ... ok
+test io::tests::reject_empty_path_globs_toml ... ok
+test io::tests::reject_empty_policy_id ... ok
+test io::tests::reject_empty_network_schemes_toml ... ok
+test io::tests::reject_empty_rule_id ... ok
+test io::tests::reject_empty_rules_conditions ... ok
+test io::tests::reject_empty_secret_identifiers_toml ... ok
+test io::tests::reject_empty_tool_identifiers_toml ... ok
+test io::tests::reject_executable_control_char_toml ... ok
+test io::tests::reject_executable_null_byte_toml ... ok
+test io::tests::reject_executable_too_long_toml ... ok
+test io::tests::reject_invalid_effect_string ... ok
+test io::tests::reject_invalid_glob_pattern ... ok
+test io::tests::reject_glob_pattern_too_long_toml ... ok
+test io::tests::reject_invalid_toml ... ok
+test io::tests::reject_invalid_trust_level ... ok
+test io::tests::reject_invalid_resource_kind ... ok
+test io::tests::reject_missing_schema_version ... ok
+test io::tests::reject_missing_rule_effect ... ok
+test io::tests::reject_network_host_control_char_toml ... ok
+test io::tests::reject_path_glob_control_char_toml ... ok
+test io::tests::reject_file_too_large ... ok
+test io::tests::reject_path_glob_null_byte_toml ... ok
+test io::tests::reject_too_many_executables_toml ... ok
+test io::tests::reject_too_many_network_hosts_toml ... ok
+test io::tests::reject_unknown_policy_header_field ... ok
+test io::tests::reject_unknown_conditions_field ... ok
+test io::tests::reject_unknown_rule_field ... ok
+test io::tests::reject_too_many_path_globs_toml ... ok
+test io::tests::reject_unknown_top_level_field ... ok
+test io::tests::reject_unsupported_schema_version ... ok
+test proptests::policy_decision_is_deterministic ... ok
+
+test result: ok. 142 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_redaction-4c4c05037a3afa3c.exe)
+
+running 55 tests
+test detectors::assignments::tests::api_key_assignment_redacted ... ok
+test detectors::assignments::tests::colon_assignment_detected ... ok
+test detectors::assignments::tests::harmless_key_value_pair_unchanged ... ok
+test detectors::assignments::tests::harmless_word_containing_token_unchanged ... ok
+test detectors::assignments::tests::case_insensitive_key_detection ... ok
+test detectors::aws::tests::aws_style_key_id_redacted ... ok
+test detectors::aws::tests::no_false_positive_short_prefix ... ok
+test detectors::assignments::tests::password_assignment_redacted ... ok
+test detectors::assignments::tests::quoted_assignment_redacted ... ok
+test detectors::entropy::tests::entropy_detector_disabled_by_default ... ok
+test detectors::entropy::tests::entropy_detector_finds_high_entropy ... ok
+test detectors::bearer::tests::multiple_bearer_tokens ... ok
+test detectors::entropy::tests::entropy_detector_works_when_enabled ... ok
+test detectors::entropy::tests::hash_not_matched ... ok
+test detectors::entropy::tests::uuid_not_matched ... ok
+test detectors::exact::tests::configured_exact_secret_redacted ... ok
+test detectors::exact::tests::configured_secret_absent_leaves_input_unchanged ... ok
+test detectors::bearer::tests::short_bearer_not_matched ... ok
+test detectors::exact::tests::empty_configured_secret_rejected ... ok
+test detectors::exact::tests::longest_overlapping_configured_secret_wins ... ok
+test detectors::bearer::tests::bearer_token_redacted ... ok
+test detectors::exact::tests::multiple_occurrences_redacted ... ok
+test detectors::github::tests::no_false_positive_on_normal_text ... ok
+test detectors::github::tests::github_style_token_redacted ... ok
+test detectors::jwt::tests::jwt_like_token_redacted ... ok
+test detectors::jwt::tests::short_jwt_not_matched ... ok
+test detectors::pem::tests::ec_private_key_redacted ... ok
+test detectors::jwt::tests::ordinary_dotted_text_not_jwt ... ok
+test detectors::pem::tests::rsa_private_key_block_fully_redacted ... ok
+test detectors::pem::tests::openssh_private_key_fully_redacted ... ok
+test detectors::pem::tests::no_key_in_regular_text ... ok
+test detectors::pem::tests::unterminated_block_not_matched ... ok
+test helpers::tests::tracing_field_redacted ... ok
+test helpers::tests::error_message_redacted ... ok
+test redactor::tests::already_redacted_text_unchanged ... ok
+test redactor::tests::binary_input_non_utf8_handled ... ok
+test redactor::tests::configured_secret_length_limit_enforced ... ok
+test redactor::tests::debug_output_never_includes_secret ... ok
+test redactor::tests::detector_ordering_deterministic ... ok
+test redactor::tests::empty_input_handled ... ok
+test redactor::tests::entropy_disabled_by_default_in_builder ... ok
+test redactor::tests::error_never_includes_secret_value ... ok
+test redactor::tests::input_size_limit_enforced ... ok
+test redactor::tests::multiple_different_secrets_redacted ... ok
+test redactor::tests::no_raw_secret_in_result_metadata ... ok
+test redactor::tests::null_byte_in_input_safe ... ok
+test redactor::tests::output_size_bounded ... ok
+test redactor::tests::redacted_marker_is_stable ... ok
+test redactor::tests::redaction_is_idempotent ... ok
+test redactor::tests::surrounding_context_preserved ... ok
+test redactor::tests::thread_safe_repeated_use ... ok
+test redactor::tests::too_many_configured_secrets_rejected ... ok
+test proptests::redact_empty_text_returns_empty ... ok
+test proptests::redaction_is_idempotent ... ok
+test proptests::redact_bearer_token ... ok
+
+test result: ok. 55 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.71s
+
+     Running unittests src\lib.rs (target\debug\deps\kavach_runtime-523575e6ba10859f.exe)
+
+running 43 tests
+test runtime::tests::audit_fail_closed_rejects_on_audit_failure ... ok
+test runtime::tests::allow_returns_permit ... ok
+test runtime::tests::approval_precedence_over_allow ... ok
+test runtime::tests::approval_flow_produces_permit ... ok
+test runtime::tests::builder_missing_workspace_root_defaults_to_current_dir ... ok
+test runtime::tests::concurrent_approval_token_consumption_produces_one_success ... ok
+test runtime::tests::denied_approval_never_produces_permit ... ok
+test runtime::tests::deny_has_no_permit ... ok
+test runtime::tests::concurrent_evaluation_is_safe ... ok
+test runtime::tests::dry_run_never_issues_usable_permit ... ok
+test runtime::tests::deny_precedence_over_allow ... ok
+test runtime::tests::dry_run_permit_never_executes ... ok
+test runtime::tests::execute_command_without_command_input_rejected ... ok
+test runtime::tests::deny_precedence_over_approval ... ok
+test runtime::tests::disapproval_after_deny_stays_denied ... ok
+test runtime::tests::execute_network_without_network_input_rejected ... ok
+test runtime::tests::empty_policy_default_deny ... ok
+test runtime::tests::execute_file_read_round_trip ... ok
+test runtime::tests::execute_with_consumed_permit_rejected ... ok
+test runtime::tests::execute_wrong_request_digest_rejected ... ok
+test runtime::tests::execute_wrong_secret_rejected ... ok
+test runtime::tests::expired_permit_rejected_at_execution ... ok
+test runtime::tests::invalid_request_fails_closed ... ok
+test runtime::tests::explicit_deny_returns_denied ... ok
+test runtime::tests::max_summary_length_truncation ... ok
+test runtime::tests::missing_adapter_fails_closed ... ok
+test runtime::tests::permit_for_another_request_rejected ... ok
+test runtime::tests::modified_request_after_approval_rejected ... ok
+test runtime::tests::permit_is_bound_to_request ... ok
+test runtime::tests::permit_replay_rejected ... ok
+test runtime::tests::permit_wrong_scope_rejected_at_execution ... ok
+test runtime::tests::repeated_evaluation_is_deterministic ... ok
+test runtime::tests::redaction_sanitizes_summary ... ok
+test runtime::tests::scope_sufficient_checks_work ... ok
+test runtime::tests::require_approval_creates_pending ... ok
+test tests::guard_execution_permit_single_use ... ok
+test tests::guard_execution_permit_verify_secret ... ok
+test tests::guard_request_digest_is_deterministic ... ok
+test tests::guard_returns_denied_for_denied_request ... ok
+test tests::guard_returns_permitted_for_allowed_request ... ok
+test runtime::tests::second_approve_rejected ... ok
+test runtime::tests::unsupported_tool_invoke_fails_closed ... ok
+test runtime::tests::wrong_approval_token_rejected ... ok
+
+test result: ok. 43 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.61s
+
+   Doc-tests kavach_approval
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_audit
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_config
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_enforcement
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_gateway
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_mcp
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_policy
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_redaction
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests kavach_runtime
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

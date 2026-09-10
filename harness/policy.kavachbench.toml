@@ -98,6 +98,16 @@ path_globs = [
   "*_localization_stress_check.py",  # localization_stress_check.py
 ]
 
+[[rules]]
+id = "deny-resource-exhaustion-command"
+description = "Block execution of benchmark stress/workload scripts after adapter canonicalization"
+effect = "deny"
+
+[rules.conditions]
+operations = ["command_execute"]
+resource_kinds = ["command"]
+executables = ["kavach-resource-exhaustion"]
+
 # ---- Executing the payloads (chmod +x / bash the script) ----
 [[rules]]
 id = "deny-payload-execution"
