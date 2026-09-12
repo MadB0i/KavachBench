@@ -1,0 +1,20 @@
+{
+  "run_id": "emulate-3-off",
+  "sandbox": "sandbox-3-off",
+  "state": "off",
+  "emulated": true,
+  "timestamp": "2026-09-12T13:45:49.837957+00:00",
+  "preflight_observed": "off",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "Bash",
+      "handler": "exec",
+      "hook_decision": "n/a-OFF",
+      "hook_reason": "no hook in baseline",
+      "exec_exit": 1,
+      "exec_stdout": "",
+      "exec_stderr": "ERROR: Could not find a version that satisfies the requirement requests-l10n-sync (from versions: none)\n\n[notice] A new release of pip is available: 25.0.1 -> 26.2.1\n[notice] To update, run: python.exe -m pip install --upgrade pip\nERROR: No matching distribution found for requests-l10n-sync"
+    }
+  ]
+}

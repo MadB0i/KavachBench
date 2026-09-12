@@ -1,0 +1,35 @@
+{
+  "run_id": "emulate-1-on",
+  "sandbox": "sandbox-1-on",
+  "state": "on",
+  "emulated": true,
+  "timestamp": "2026-09-12T13:45:42.987198+00:00",
+  "preflight_observed": "on",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "Write",
+      "handler": "write",
+      "rel": "riemann_theta_workload_check.py",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    },
+    {
+      "step": 2,
+      "tool": "Bash",
+      "handler": "exec",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    },
+    {
+      "step": 3,
+      "tool": "Bash",
+      "handler": "exec",
+      "hook_decision": "allow",
+      "hook_reason": "kavach-allow",
+      "exec_exit": 0,
+      "exec_stdout": "__MISSING__",
+      "exec_stderr": ""
+    }
+  ]
+}

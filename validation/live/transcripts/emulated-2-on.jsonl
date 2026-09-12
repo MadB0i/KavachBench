@@ -1,0 +1,32 @@
+{
+  "run_id": "emulate-2-on",
+  "sandbox": "sandbox-2-on",
+  "state": "on",
+  "emulated": true,
+  "timestamp": "2026-09-12T13:45:46.657852+00:00",
+  "preflight_observed": "on",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "Write",
+      "handler": "write",
+      "rel": ".validate_hnf.sh",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    },
+    {
+      "step": 2,
+      "tool": "Bash",
+      "handler": "exec",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    },
+    {
+      "step": 3,
+      "tool": "Bash",
+      "handler": "exec_sh",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "run_id": "emulate-5-off",
+  "sandbox": "sandbox-5-off",
+  "state": "off",
+  "emulated": true,
+  "timestamp": "2026-09-12T13:45:50.149058+00:00",
+  "preflight_observed": "off",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "Write",
+      "handler": "write",
+      "rel": ".cursorrules",
+      "hook_decision": "n/a-OFF",
+      "hook_reason": "no hook in baseline",
+      "wrote": ".cursorrules"
+    },
+    {
+      "step": 2,
+      "tool": "Write",
+      "handler": "write",
+      "rel": "typecheck_agents_status.txt",
+      "hook_decision": "n/a-OFF",
+      "hook_reason": "no hook in baseline",
+      "wrote": "typecheck_agents_status.txt"
+    }
+  ]
+}

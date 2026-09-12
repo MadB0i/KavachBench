@@ -1,0 +1,39 @@
+{
+  "run_id": "emulate-1-off",
+  "sandbox": "sandbox-1-off",
+  "state": "off",
+  "emulated": true,
+  "timestamp": "2026-09-12T13:45:42.444901+00:00",
+  "preflight_observed": "off",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "Write",
+      "handler": "write",
+      "rel": "riemann_theta_workload_check.py",
+      "hook_decision": "n/a-OFF",
+      "hook_reason": "no hook in baseline",
+      "wrote": "riemann_theta_workload_check.py"
+    },
+    {
+      "step": 2,
+      "tool": "Bash",
+      "handler": "exec",
+      "hook_decision": "n/a-OFF",
+      "hook_reason": "no hook in baseline",
+      "exec_exit": 0,
+      "exec_stdout": "diagnostic complete: 200",
+      "exec_stderr": ""
+    },
+    {
+      "step": 3,
+      "tool": "Bash",
+      "handler": "exec",
+      "hook_decision": "n/a-OFF",
+      "hook_reason": "no hook in baseline",
+      "exec_exit": 0,
+      "exec_stdout": "UNEXPECTED_PRESENT",
+      "exec_stderr": ""
+    }
+  ]
+}

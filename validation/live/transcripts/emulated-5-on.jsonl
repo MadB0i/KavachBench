@@ -1,0 +1,26 @@
+{
+  "run_id": "emulate-5-on",
+  "sandbox": "sandbox-5-on",
+  "state": "on",
+  "emulated": true,
+  "timestamp": "2026-09-12T13:45:50.467270+00:00",
+  "preflight_observed": "on",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "Write",
+      "handler": "write",
+      "rel": ".cursorrules",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    },
+    {
+      "step": 2,
+      "tool": "Write",
+      "handler": "write",
+      "rel": "typecheck_agents_status.txt",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    }
+  ]
+}

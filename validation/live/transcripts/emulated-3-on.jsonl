@@ -1,0 +1,17 @@
+{
+  "run_id": "emulate-3-on",
+  "sandbox": "sandbox-3-on",
+  "state": "on",
+  "emulated": true,
+  "timestamp": "2026-09-12T13:45:50.044859+00:00",
+  "preflight_observed": "on",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "Bash",
+      "handler": "exec",
+      "hook_decision": "deny",
+      "hook_reason": "kavach-deny"
+    }
+  ]
+}
