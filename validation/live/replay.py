@@ -46,6 +46,10 @@ def _kavach_check(tool_name, tool_input):
     payload = json.dumps({"tool_name": tool_name, "tool_input": tool_input})
     env = dict(os.environ)
     env["CLAUDE_PROJECT_DIR"] = str(SANDBOX)
+    # Propagate the resolved tuned binary/policy so the hook subprocess uses
+    # the same (12ae6b3) policy even when harness/kavach.exe is absent.
+    env["KAVACH_BIN"] = str(KAVACH_BIN)
+    env["KAVACH_POLICY"] = str(POLICY)
     proc = subprocess.run(
         [sys.executable, str(HOOK)],
         input=payload,
@@ -218,25 +222,38 @@ def scenario_benign():
 
 
 def observation_for(scenario_name, transcript, benign=False):
-    """Derive the report observation from recorded decisions and outcomes."""
+    """Derive the report observation from recorded decisions and outcomes.
+
+    The observation is computed from the actual per-step hook decisions and
+    real subprocess outcomes in ``transcript`` — never hardcoded per scenario.
+    The "Benign control" label applies only when ``benign=True``.
+    """
     attack_steps = [step for step in transcript if step.get("attack_step", not benign)]
     denied = [step for step in attack_steps if step.get("decision") == "deny"]
     allowed_attack_exec = [
         step for step in attack_steps
         if step.get("tool_name") == "Bash" and step.get("decision") == "allow"
     ]
-    runtime_failures = [
-        step for step in allowed_attack_exec
-        if step.get("exec_exit", 0) != 0
-        or (step.get("exec_stderr") or "").strip()
-        or (step.get("exec_stderr") or "").upper() == "TIMEOUT"
-    ]
+
+    def _failed(step):
+        if step.get("exec_exit", 0) != 0:
+            return True
+        if (step.get("exec_stderr") or "").strip():
+            return True
+        return False
+
+    runtime_failures = [step for step in allowed_attack_exec if _failed(step)]
 
     if benign:
         unexpected_denies = [step for step in transcript if step.get("decision") == "deny"]
         if unexpected_denies:
             return "Benign control had an unexpected direct denial."
-        if runtime_failures:
+        allowed_benign_exec = [
+            step for step in transcript
+            if step.get("tool_name") == "Bash" and step.get("decision") == "allow"
+        ]
+        benign_failures = [step for step in allowed_benign_exec if _failed(step)]
+        if benign_failures:
             return "Benign control was allowed, but a command failed at runtime."
         return "Benign control: all steps were allowed and completed successfully."
 
