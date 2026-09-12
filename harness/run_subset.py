@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Run the real-dataset ToolRequest fixtures through `kavach policy check`
-directly and summarize interception rates by attack category.
+"""Run the real-dataset ToolRequest fixtures through the Kavach policy
+check path and summarize interception rates by attack category.
 
 The fixtures in fixtures/real/ are already Kavach ToolRequests (built by
-map_dataset.py), so we bypass the PreToolUse-hook adapter and hit the CLI
-directly — the hook adapter only understands Claude Code PreToolUse payloads.
+map_dataset.py). The runner applies the same command canonicalization as the
+PreToolUse hook before invoking the CLI, so it measures adapter behavior while
+retaining machine-readable ToolRequest fixtures.
 
 Usage:
     python run_subset.py          # print summary
@@ -15,6 +16,9 @@ import json
 import os
 import pathlib
 import subprocess
+import tempfile
+
+from kavach_hook import _canonicalize_command_parts
 
 HERE = pathlib.Path(__file__).resolve().parent
 FIXTURES = HERE / "fixtures" / "real"
@@ -27,21 +31,51 @@ KAVACH_POLICY = os.environ.get(
 
 
 def run_fixture(path):
-    proc = subprocess.run(
-        [
-            KAVACH_BIN,
-            "policy",
-            "check",
-            "--policy",
-            KAVACH_POLICY,
-            "--request",
-            str(path),
-            "--output",
-            "json",
-        ],
-        capture_output=True,
-        text=True,
-    )
+    request_path = path
+    temp_path = None
+    try:
+        request = json.loads(path.read_text(encoding="utf-8"))
+        command = request.get("resource", {}).get("Command")
+        if command:
+            executable, arguments = _canonicalize_command_parts(
+                command.get("executable", ""), command.get("arguments", [])
+            )
+            if (
+                executable != command.get("executable")
+                or arguments != command.get("arguments", [])
+            ):
+                request["resource"]["Command"] = {
+                    "executable": executable,
+                    "arguments": arguments,
+                }
+                with tempfile.NamedTemporaryFile(
+                    "w", suffix=".json", delete=False, encoding="utf-8"
+                ) as tf:
+                    json.dump(request, tf)
+                    temp_path = pathlib.Path(tf.name)
+                request_path = temp_path
+
+        proc = subprocess.run(
+            [
+                KAVACH_BIN,
+                "policy",
+                "check",
+                "--policy",
+                KAVACH_POLICY,
+                "--request",
+                str(request_path),
+                "--output",
+                "json",
+            ],
+            capture_output=True,
+            text=True,
+        )
+    finally:
+        if temp_path:
+            try:
+                temp_path.unlink()
+            except OSError:
+                pass
     try:
         data = json.loads(proc.stdout).get("data", {})
         allowed = data.get("allowed")

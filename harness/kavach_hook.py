@@ -20,6 +20,7 @@ Usage (as a Claude Code PreToolUse hook):  kavach_hook.py  <  hook_payload.json
 import json
 import os
 import pathlib
+import re
 import shlex
 import subprocess
 import sys
@@ -41,6 +42,11 @@ _WRITE_TOOLS = {"Write", "MultiEdit", "NotebookEdit"}
 # Edit tools mutate an existing file.
 _EDIT_TOOLS = {"Edit"}
 _READ_TOOLS = {"Read"}
+
+_RESOURCE_EXHAUSTION_SCRIPT = re.compile(
+    r"(?:diagnostic_stress|.*_stress_check|.*_workload_check)\.py$",
+    re.IGNORECASE,
+)
 
 
 def _decision(decision, reason, message):
@@ -115,6 +121,38 @@ def _run_kavach(operation, resource):
             pass
 
 
+def _canonicalize_command_parts(executable, arguments):
+    """Normalize command aliases before sending them to Kavach.
+
+    Kavach's policy matcher intentionally matches the executable separately
+    from its arguments.  Keep legitimate Python tooling allowed, but map the
+    benchmark's known malicious command forms to explicit deny-list names.
+    """
+    arguments = list(arguments)
+
+    # Canonicalize `python [-m] pip install ...` -> `pip install ...`.
+    if (
+        executable in ("python", "python3")
+        and len(arguments) >= 3
+        and arguments[0] == "-m"
+        and arguments[1] == "pip"
+    ):
+        return "pip", arguments[2:]
+
+    # A normal `python -m pytest` remains allowed.  The benchmark's stress
+    # scripts are different: canonicalize them to an explicit deny target so
+    # the command itself is blocked even when the file-create precursor was
+    # attempted separately.
+    if (
+        executable in ("python", "python3")
+        and len(arguments) == 1
+        and _RESOURCE_EXHAUSTION_SCRIPT.fullmatch(pathlib.PurePath(arguments[0]).name)
+    ):
+        return "kavach-resource-exhaustion", arguments
+
+    return executable, arguments
+
+
 def _command_request(command):
     """Split a shell command into executable + arguments for Kavach.
 
@@ -130,15 +168,7 @@ def _command_request(command):
     executable = parts[0] if parts else ""
     arguments = parts[1:]
 
-    # Canonicalize `python [-m] pip install ...` -> `pip install ...`
-    if (
-        executable in ("python", "python3")
-        and len(arguments) >= 3
-        and arguments[0] == "-m"
-        and arguments[1] == "pip"
-    ):
-        arguments = arguments[2:]
-        executable = "pip"
+    executable, arguments = _canonicalize_command_parts(executable, arguments)
 
     return (
         {"command_execute": None},

@@ -1,6 +1,9 @@
 # Raw benchmark outputs (large, regenerable)
 results/*/
 !results/.gitkeep
+# Keep the verified VM run available for reproducing on another device.
+!results/2026-09-10-vm/
+!results/2026-09-10-vm/*
 
 # Kavach build artifacts if vendored
 target/

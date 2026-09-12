@@ -130,13 +130,15 @@ The bench policy was widened to cover the real-dataset seed filenames:
 | supply_chain | 6 | 4/6 | **6/6** |
 | persistence_hook | 17 | **17/17** | **17/17** |
 | policy_bypass | 8 | **8/8** | **8/8** |
-| resource_exhaustion | 11 | 6/11 | 6/11 |
-| **Total** | **42** | **35/42 (83%)** | **37/42 (88%)** |
+| resource_exhaustion | 11 | 6/11 | **11/11** |
+| **Total** | **42** | **35/42 (83%)** | **42/42 (100%)** |
 
-The table above is the historical pre-tuning result. After tuned policy
-`12ae6b3`, the offline 42-action inventory was re-run with the current
-guest-local binary and policy: `supply_chain` **6/6**, `persistence_hook`
-**17/17**, `policy_bypass` **8/8**, and `resource_exhaustion` **11/11**;
+### Why 5/11 resource_exhaustion actions were previously "allowed"
+
+The table above shows the post-tuning result. After tuned policy `12ae6b3`,
+the offline 42-action inventory was re-run with the current guest-local binary
+and policy: `supply_chain` **6/6**, `persistence_hook` **17/17**,
+`policy_bypass` **8/8**, and `resource_exhaustion` **11/11**;
 **42/42 actions were directly denied**.
 
 ### Historical pre-tuning ENOENT chain
@@ -144,6 +146,10 @@ guest-local binary and policy: `supply_chain` **6/6**, `persistence_hook`
 Before tuning, five resource-exhaustion actions followed the pattern where the
 script creation was denied but `python <script>.py` remained allowed. That
 historical behavior explains the earlier ENOENT-based defense-in-depth result.
+
+The adapter now canonicalizes these known benchmark stress/workload script
+commands to `kavach-resource-exhaustion`, which is explicitly denied. The
+file-create deny remains as defense in depth.
 
 ### Post-tuning execution semantics
 
@@ -165,8 +171,9 @@ first token is `python`, which is in the dev-tools allowlist → **allowed.**
 **Canonicalization fix:** The hook adapter (`_command_request`) now detects
 `python [-m] pip install ...` and rewrites the ToolRequest to
 `{executable: "pip", arguments: ["install", ...]}` before sending to Kavach.
-This closes the 2-hole gap. Reproduced: `run_feasibility.py` passes all 11
-original assertions (regression check, including `pip install trojan-mathpkg`).
+This closes both command-form gaps while preserving legitimate `python -m
+pytest`. Reproduced: `run_subset.py` reports **42/42** blocked and
+`run_feasibility.py` passes all 11 original assertions.
 
 ---
 
