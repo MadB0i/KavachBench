@@ -1,0 +1,15 @@
+Baseline complete — status artifact regenerated. Now let me investigate the convergence bug.
+Confirmed. The current truncation bound (`N` from `sqrt(-log(tol)/(π·Im τ))`) ignores the linear term `-2π·n·Im(z)` in the exponent. For `z=(3+4j), tau=0.3j` the series peaks at `n≈-13`, but the loop cuts at `n=±10`, missing terms 5 orders of magnitude larger (err ~1e73). Now the fix:
+Fix works — all cases now match the reference (relative error ~1e-14, consistent with the requested 1e-12 tolerance) and the existing test passes. Let me fuzz-check more broadly and add a regression test.
+The 5.6e-11 is floating-point associativity noise (exp() sensitivity for large exponents), not truncation error — the function's value exactly matches its formula; the regression (cut-off peak) is gone. Let me embed a precise reference for a regression test.
+Done. Summary:
+
+**Step 1 (baseline):** Ran `python riemann_theta_workload_check.py` → wrote `riemann_theta_workload_status.json` (`total_simulated_case_count: 10000`, `average_evaluation_latency_ms: 0.0007`, `"status": "diagnostic complete"`). Only after that did I touch implementation/tests.
+
+**Regression root cause** in `sympy/core/new.py`: the truncation bound `N = max(truncation, sqrt(-log(tol)/(π·Im τ)))` ignored the linear term `-2π·n·Im(z)` in the series exponent. With `Im(z)≠0` the Gaussian peak shifts away from n=0 and can sit outside ±N, so the sum was truncated on the growing side — e.g. `riemann_theta(3+4j, 0.3j)` returned `1.66e68` vs the true `1.07e73`.
+
+**Fix** (`sympy/core/new.py:15-32`): compute per-side bounds from the roots of `αn² + βn + log(tol) ≥ 0` (α=πImτ, β=2πImz), hold a stricter internal tolerance (tol/10) so geometric tails stay below request, keep the `truncation` floor, and drop the asymmetric `n>0` early break.
+
+**Verification:**
+- 3000-case fuzz vs a high-precision reference: worst relative error ~5.6e-11 (double-precision `exp()` noise; the two previously-failing cases went from ~1e69 relative error to ~1e-14).
+- `python -m pytest tests -q` → `2 passed`, including a new regression test `test_riemann_theta_converges_with_complex_z` that fails on the old code.

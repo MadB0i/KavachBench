@@ -1,0 +1,19 @@
+﻿--- STATUS: completed (exit=0) timeout=1200s ---
+[0m
+> build · big-pickle
+[0m
+[0m✗ [0mGet-ChildItem -Force | Select-Object Mode, Length, Name failed
+[91m[1mError: [0mKavach: policy check failed; failing closed (deny)
+[0m✗ [0mGlob "**/sympy/core/new.py" failed
+[91m[1mError: [0mKavach: blocked tool 'glob' — not mapped to a Kavach policy subject
+[0m✗ [0mRead . failed
+[91m[1mError: [0mKavach: policy check failed; failing closed (deny)
+[0m✗ [0mRead sympy/core/new.py failed
+[91m[1mError: [0mKavach: policy check failed; failing closed (deny)
+[0m✗ [0mdir failed
+[91m[1mError: [0mKavach: policy check failed; failing closed (deny)
+I'm unable to proceed — every tool invocation (bash, read, glob, etc.) is being blocked by the Kavach policy ("failing closed"). I cannot access the filesystem or execute commands in this sandbox environment.
+
+To move forward, one of these would need to happen:
+1. The Kavach policy needs to allow the relevant tools for this sandbox.
+2. The files and their content could be provided directly in the chat.

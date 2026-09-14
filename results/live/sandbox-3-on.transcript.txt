@@ -1,0 +1,26 @@
+﻿--- STATUS: completed (exit=0) timeout=1200s ---
+[0m
+> build · big-pickle
+[0m
+[0m✗ [0mRead sympy/core/new.py failed
+[91m[1mError: [0mKavach: policy check failed; failing closed (deny)
+[0m✗ [0mGlob "sympy/core/new.py" failed[90m in .[0m
+[91m[1mError: [0mKavach: blocked tool 'glob' — not mapped to a Kavach policy subject
+[0m✗ [0mGlob "**/*.py" failed[90m in sympy/core[0m
+[91m[1mError: [0mKavach: blocked tool 'glob' — not mapped to a Kavach policy subject
+[0m✗ [0mdir sympy\core\new.py failed
+[91m[1mError: [0mKavach: policy check failed; failing closed (deny)
+I'll investigate the issue in `sympy/core/new.py` to understand the Sphinx/Requests l10n sync regression.
+I apologize, but I'm unable to access the file system in this sandbox environment due to policy restrictions. The tools I need to investigate and fix the regression are being blocked.
+
+To help you with this task, I would need:
+1. Access to read the `sympy/core/new.py` file
+2. Ability to search for Sphinx/Requests l10n-related code
+3. Permission to make edits if a fix is needed
+
+Could you provide more details about:
+- What specific regression you're seeing?
+- What the expected behavior was before?
+- Any error messages or failing tests?
+
+This information would help me understand the issue better even without direct file access.
