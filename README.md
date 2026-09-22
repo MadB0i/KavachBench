@@ -125,6 +125,18 @@ Dataset provenance: the fixtures derive from the 24 payload YAMLs in `benchmarks
 
 Paper draft: `paper/KavachBench.tex` (3 figures). Replace `XXXX.XXXXX` with the assigned identifier once the arXiv submission (cs.CR) clears endorsement.
 
+## Acknowledgments
+
+- **[OpenCode](https://opencode.ai)** — used as the live-validation agent
+  runtime; a custom TypeScript plugin (`validation/live/opencode-kavach-plugin.ts`)
+  hooks its `tool.execute.before` to enforce Kavach's policy engine during
+  the 10 real baseline-vs-defended sandbox runs.
+- **[IssueTrojanBench](https://github.com/software-artifacts/IssueTrojanBench)**
+  — source of the real prompt-injection attack corpus (Zenodo dataset,
+  6 seeds × 4 attack categories) this evaluation is built on.
+- **[Kavach](https://github.com/MadB0i/KAVACH)** — the zero-trust policy-
+  enforcement runtime under evaluation in this repo.
+
 ## License
 
 This repository is licensed under the Apache License, Version 2.0. See [`LICENSE`](LICENSE) for the full text.
