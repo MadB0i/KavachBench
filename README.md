@@ -2,7 +2,7 @@
 
 **Abstract.** KavachBench is a research-evaluation harness that measures how well Kavach — a Rust zero-trust policy-enforcement runtime for AI-agent tool calls — blocks real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine attack tool-call actions across 4 categories, plus benign controls.
 
-[![License: TBD](https://img.shields.io/badge/license-TBD-lightgrey.svg)](#license) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX)
 
 ## Motivation
 
@@ -127,4 +127,4 @@ Paper draft: `paper/KavachBench.tex` (3 figures). Replace `XXXX.XXXXX` with the 
 
 ## License
 
-No `LICENSE` file is declared in this repository at present; license terms are to be confirmed. (For reference, Kavach itself — the system under test — is released under Apache-2.0.)
+This repository is licensed under the Apache License, Version 2.0. See [`LICENSE`](LICENSE) for the full text.
