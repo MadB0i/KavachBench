@@ -55,9 +55,25 @@ The five recovered actions were tool-call forms the out-of-the-box executable ma
 
 ## Architecture
 
-![Architecture diagram placeholder: an OpenCode agent issuing tool calls through a tool.execute.before hook plugin that forwards each call to the compiled Kavach binary for policy evaluation, with allow proceeding to execution and deny blocking before any side effect, plus the parallel baseline path with the hook disabled](docs/screenshots/architecture-diagram.png)
+```mermaid
+flowchart TD
+    A["OpenCode agent<br/>emits tool call"] --> B{"Defended run?"}
+    B -- "Yes" --> C["tool.execute.before hook<br/>(kavach.ts)"]
+    C --> D["Kavach binary<br/>(harness/kavach.exe)"]
+    D --> E["Evaluate against<br/>harness/policy.kavachbench.toml"]
+    E --> F{"Policy decision"}
+    F -- "Allow" --> G["Tool executes normally"]
+    F -- "Deny" --> H["Blocked — no side effect"]
+    B -- "No — baseline" --> I["Hook disabled<br/>executes directly"]
+    classDef allow fill:#d4edda,stroke:#28a745,color:#155724
+    classDef deny fill:#f8d7da,stroke:#dc3545,color:#721c24
+    classDef neutral fill:#fff3cd,stroke:#ffc107,color:#856404
+    class G allow
+    class H deny
+    class I neutral
+```
 
-> [DIAGRAM PLACEHOLDER] — Replace `docs/screenshots/architecture-diagram.png` with a diagram showing: the OpenCode agent emitting tool calls; the `tool.execute.before` hook plugin (`kavach.ts`) forwarding each call to the compiled Kavach binary (`harness/kavach.exe`) for evaluation under `harness/policy.kavachbench.toml`; the allow path proceeding to execution and the deny path blocking before any side effect; and the parallel baseline path with the hook disabled for comparison.
+*Enforcement flow: defended runs pass every tool call through the `tool.execute.before` hook into Kavach policy evaluation — allow executes, deny blocks with no side effect — while baseline runs execute directly with the hook disabled.*
 
 ## Screenshots
 
