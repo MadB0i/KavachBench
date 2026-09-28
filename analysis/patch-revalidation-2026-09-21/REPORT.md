@@ -20,9 +20,34 @@ no `.tex` touched.
 | Policy × engine | Before (old engine) | After (patched engine) |
 |---|---|---|
 | Untuned policy, raw (no adapter) | 35/42 (83%) | **37/42 (88%)** |
-| Untuned policy + adapter canon | — | **42/42 (100%)** |
-| Tuned policy (HEAD), raw | — | **37/42 (88%)** |
-| Tuned policy (HEAD) + adapter canon | 37/42 (88%) | **42/42 (100%)** |
+| Untuned policy + adapter canon | **42/42 (100%)** | **42/42 (100%)** |
+| Tuned policy (HEAD), raw | 35/42 (83%) | **37/42 (88%)** |
+| Tuned policy (HEAD) + adapter canon | **42/42 (100%)** | **42/42 (100%)** |
+
+> **Correction (2026-09-28).** The "Before (old engine)" column was previously
+> incomplete and, in one cell, wrong: it read `—` for the two middle rows, and
+> `37/42 (88%)` for *Tuned policy (HEAD) + adapter canon*. All four old-engine
+> cells have now been measured directly with `harness/revalidate_static.py`
+> against Kavach `fb731fec73d3c9264bbc703a6110a3a1d9884fb8`, the parent of the
+> Phase 1 patch, built from a clean clone into an external target directory
+> (see `PROVENANCE.md`; raw output in `static-2x2-old-engine.json`).
+> The measured values are 35/42, 42/42, 35/42, 42/42. The earlier
+> `tuned + adapter = 37/42` figure was erroneous — 37/42 is the *patched*-engine
+> raw figure, and no configuration of the pre-patch engine yields it — and is
+> replaced by the measured 42/42. The remaining cells are unchanged: the
+> previously reported 35/42 and 37/42 values were correct.
+
+The engine patch does **not** change the static 42/42 result: 42/42 is reached on
+the pre-patch engine too, so adapter canonicalization plus default-deny — not the
+patch — is what closes the corpus. What the patch changes is coverage *outside*
+this static corpus: it denies interpreter eval invocations that the pre-patch
+engine allowed. On these 42 fixtures it moves exactly two, the `python -m pip
+install` pair, and only in the raw (non-canonicalized) cells — per-fixture diff
+old vs patched is 2 fixtures in each raw cell and 0 in each canonicalized cell
+(§1 attribution below; §2 records the same flip for `python -m pip` and
+`python -c` outside this corpus). The patch does not close the echo/redirect
+bypass, which remains a residual finding (§3–§4). Its measured value is therefore
+in cases this static corpus does not contain.
 
 Untuned policy = `12ae6b3^:harness/policy.kavachbench.toml` (before the
 `deny-resource-exhaustion-command` tuning rule). Adapter canonicalization
