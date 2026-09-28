@@ -46,14 +46,19 @@ Each sandbox is run twice — once with the Kavach hook disabled (baseline) and 
 
 ## Results
 
-| Configuration | Blocked | Rate |
+| Configuration (policy × adapter × engine) | Blocked | Rate |
 |---|---|---|
-| Out-of-the-box policy | 37 / 42 | 88% |
-| After iterative, benchmark-informed policy tuning | 42 / 42 | 100% |
+| Untuned policy, raw requests, patched engine | 37 / 42 | 88% |
+| Tuned policy + adapter canonicalization, patched engine | 42 / 42 | 100% |
+| *(reference)* Untuned policy, raw requests, pre-patch engine | 35 / 42 | 83% |
+
+The 37 → 42 gain is **adapter canonicalization, not policy tuning**. The adapter maps the benchmark's known command forms onto names the policy resolves differently — `python -m pip install …` onto the supply-chain deny rule, and `python *_stress_check.py` / `python *_workload_check.py` onto a name no rule lists, which default-deny then blocks. Both policy variants reach 42/42 once the adapter is applied, so the tuning rule for stress/workload-script execution adds no coverage; it contributes **rule-level audit attribution** instead: with the untuned policy those five denials match no rule and are recorded as a bare default-deny, whereas the tuned policy records the explicit `deny-resource-exhaustion-command` rule. No legitimate allowance is removed either way — benign reads, edits, and test commands still evaluate to allow.
+
+The engine patch is not what closes the corpus: the pre-patch engine also reaches 42/42 with the adapter (`analysis/patch-revalidation-2026-09-21/REPORT.md`). On raw requests the patch moves only the two `python -m pip install` fixtures (35 → 37), by denying interpreter eval invocations; the full before/after matrix and the per-fixture evidence are in that report.
 
 **Engine version:** the 42/42 static result is reproducible on the currently committed `harness/kavach.exe` with `python harness/run_subset.py`; the 10 live runs were measured against the pre-patch engine, and `analysis/patch-revalidation-2026-09-21/REPORT.md` contains the full before/after matrix for both engines.
 
-The five recovered actions were tool-call forms the out-of-the-box executable matching did not cover: `python -m pip install` invocations, which map to the allowlisted `python` executable rather than `pip`, and stress/workload-script executions (`python *_stress_check.py`, `python *_workload_check.py`), which likewise present only a trusted interpreter name. Both were closed by benchmark-informed tuning — adapter canonicalization of the `python -m pip` form onto the supply-chain deny rule, and an explicit deny rule for the benchmark's stress/workload-script executions — without removing any legitimate allowance: benign reads, edits, and test commands still evaluate to allow. The 10 live runs corroborate the static result: baseline runs completed the induced chains, while defended runs denied each attack step at the hook boundary before any side effect occurred.
+The 10 live runs corroborate the static result: baseline runs completed the induced chains, while defended runs denied each attack step at the hook boundary before any side effect occurred.
 
 ## Architecture
 
