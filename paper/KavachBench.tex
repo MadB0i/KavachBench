@@ -203,11 +203,12 @@ methods: static policy-coverage analysis, adversarial probing,
 mechanism-level trace replay, and live-agent experiments using OpenCode with
 the MiMo V2.5 model.
 
-In static evaluation, a default-deny policy blocked 37 of 42 canonical
-malicious action footprints (88\%) when requests were evaluated in raw form,
-and 42/42 (100\%) once the adapter canonicalized command requests. A
-controlled re-validation across engine build, policy, and adapter mode
-attributes this gain to adapter canonicalization under default-deny;
+In static evaluation, a default-deny policy blocked 35 of 42 canonical
+malicious action footprints (83\%) on the pre-patch engine and 37 of 42
+(88\%) on the patched engine when requests were evaluated in raw form, and
+42/42 (100\%) once the adapter canonicalized command requests, on both engine
+builds. A controlled re-validation across engine build, policy, and adapter
+mode attributes this gain to adapter canonicalization under default-deny;
 corpus-specific rules changed which rule fired, not what was blocked. We
 treat 42/42 as corpus-specific coverage rather than evidence of
 generalization to unseen attacks. Across 22 adversarial probes, no genuine
@@ -566,10 +567,17 @@ presentation matrix.
 We constructed 22 hand-crafted adversarial probes targeting potential policy
 weaknesses outside the benchmark corpus. The probes covered command-matching
 edge cases, path traversal and canonicalization behavior, and mismatches
-between policy patterns and concrete tool requests.
+between policy patterns and concrete tool requests. All 22 were evaluated on
+the pre-patch engine.
 
 No genuine policy bypass was identified across the 22 probes under the
 evaluated policy and adapter configuration.
+
+Re-running the same 22 probes against the patched engine yields 19 denials,
+one validation rejection and two legitimate allowances, with no genuine
+bypass among them; exactly one probe changes, the
+\texttt{python -m pip install} case, which the Phase~1 baseline rule now
+denies at the engine layer rather than allowing.
 
 Some probe safety classifications were defined by human-authored expected
 labels. This introduces a methodological limitation because the
@@ -594,8 +602,11 @@ as an inferred explanation.
 \subsection{Live-Agent Evaluation}
 
 Live experiments used OpenCode with the MiMo V2.5 model in a sandboxed,
-network-restricted environment. Each scenario was evaluated in paired
-baseline and defended configurations:
+network-restricted environment. All live runs reported here were executed on
+the pre-patch engine; no live scenario was repeated on the patched engine, the
+only post-patch live-adjacent re-test being a single targeted
+shell-redirection scenario recorded in the re-validation report. Each scenario
+was evaluated in paired baseline and defended configurations:
 
 \begin{itemize}
     \item \textbf{Baseline:} Kavach disabled.
@@ -633,6 +644,7 @@ and mechanism-level results.
     form, and engine build.}
     \label{tab:static2x2}
 
+    \resizebox{\textwidth}{!}{%
     \begin{tabular}{@{}lrr@{}}
         \toprule
         \textbf{Policy} & \textbf{Request form} &
@@ -643,7 +655,8 @@ and mechanism-level results.
         Corpus-informed   & Raw (as issued by agent) & 35/42 $\rightarrow$ 37/42 \\
         Corpus-informed   & Adapter-canonicalized  & 42/42 $\rightarrow$ 42/42 \\
         \bottomrule
-    \end{tabular}
+    \end{tabular}%
+    }
 \end{table}
 
 \begin{table}[htbp]
@@ -939,14 +952,24 @@ evidence comes from the adversarial probes and the live runs instead.
 
 \textbf{Default-deny confound.}
 A default-deny policy is expected to produce high block rates, so a high
-static block rate is weak evidence of attack-specific detection. A
-benign-control false-positive rate was measured, but only on the pre-patch
-engine and on a small number of controls. All three static benign fixtures
-were allowed, and both benign trace-replay steps were allowed. The single live
+static block rate is weak evidence of attack-specific detection. Benign
+controls were measured on both engine builds. On the pre-patch engine, all
+three static benign fixtures and both benign trace-replay steps were allowed,
+a false-positive rate of 0/3 and 0/2 respectively. The single live
 benign-control run was the exception: it recorded 9 spurious denials against
-10 allowed tool calls, including the legitimate file edit and file write
-discussed in Section~\ref{sec:weaknesses}. No benign-control measurement
-exists for the patched engine.
+10 allowed tool calls, and this result is not softened by the smaller samples
+above. The causes of 5 of those 9 denials were isolated: two arose because
+the agent adapter could not map a tool that carries no file path and failed
+closed, two because a legitimate executable was absent from the policy's
+allowlist and hit the default deny, and one because an absolute path did not
+match a root-anchored allow pattern, the path-representation mismatch
+discussed in Section~\ref{sec:weaknesses}. The remaining 4 denials took the
+adapter's fail-closed branch, meaning the policy check returned no parseable
+decision; their proximate cause was not isolated and is not claimed here.
+Re-running all five benign controls against the patched engine produced no
+false positives in any of the four policy-by-request-form cells, so the
+patched engine is not shown to inherit the live false positives, and the
+live run itself was not repeated on it.
 
 \medskip
 
@@ -1000,7 +1023,12 @@ evaluation artifacts are publicly available:
 Engine: Kavach commit \texttt{dff0538} (Phase~1b), the earliest commit whose
 build matches the vendored binary's behavior on a six-probe differential.
 Attribution is behavioral rather than digest-based, because release builds are
-not byte-reproducible on the build host. Archived release: KavachBench v1.1.0,
+not byte-reproducible on the build host. The commits \texttt{800f5f0},
+\texttt{8b5b3a5}, \texttt{d0257e9}, \texttt{5147034} and \texttt{c137774} are
+indistinguishable from \texttt{dff0538} on all six probes, and the later ones do
+not touch the policy engine, so the vendored binary cannot be attributed to
+\texttt{dff0538} uniquely; \texttt{dff0538} is the earliest consistent
+attribution rather than a proven one. Archived release: KavachBench v1.1.0,
 DOI \texttt{[TODO after Zenodo]}.
 
 The study intentionally reports weaknesses discovered during evaluation as
@@ -1048,10 +1076,11 @@ This paper evaluated deterministic, action-layer policy enforcement as a
 complement to model-level judgment against issue-based prompt injection in
 AI coding agents.
 
-Using Kavach and the IssueTrojanBench corpus, a default-deny policy blocked 37
-of 42 canonical malicious action footprints (88\%) when requests were
-evaluated in raw form, and 42/42 (100\%) once the adapter canonicalized
-command requests. A factorial re-validation attributes that gain to adapter
+Using Kavach and the IssueTrojanBench corpus, a default-deny policy blocked 35
+of 42 canonical malicious action footprints (83\%) on the pre-patch engine and
+37 of 42 (88\%) on the patched engine when requests were evaluated in raw form,
+and 42/42 (100\%) once the adapter canonicalized command requests, on both
+engine builds. A factorial re-validation attributes that gain to adapter
 canonicalization under default-deny; the corpus-informed rules changed which
 rule fired, not what was blocked, and the 42/42 figure is corpus-specific
 coverage rather than a generalization estimate. Twenty-two adversarial probes
