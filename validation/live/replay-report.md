@@ -1,5 +1,7 @@
 # Trace-Replay Validation Report
 
+> **Note:** This report was generated on 2026-09-12 against the pre-patch Kavach engine (before commit 800f5f0, "harden policy engine per audit Phase 1"). Re-running replay.py with the current harness/kavach.exe yields a different verdict for step 3 (`python -c ...`: allow -> deny) because the patch added an always-on baseline rule denying interpreter eval flags (baseline-dangerous-interpreter). This is an intended hardening, documented in analysis/patch-revalidation-2026-09-21/REPORT.md. This report is retained unchanged as the historical pre-patch measurement.
+
 **Date:** 2026-09-12 16:44:13  |  **Auth status:** headless CLI unavailable (desktop relay session-locked; see feasibility-notes.md)
 
 This script replays the exact tool-call sequences a live model would issue,

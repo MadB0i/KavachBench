@@ -51,6 +51,8 @@ Each sandbox is run twice — once with the Kavach hook disabled (baseline) and 
 | Out-of-the-box policy | 37 / 42 | 88% |
 | After iterative, benchmark-informed policy tuning | 42 / 42 | 100% |
 
+**Engine version:** the static figures above are the patched-engine results, reproducible with `python harness/run_subset.py`; the 10 live runs were measured against the pre-patch engine, and `analysis/patch-revalidation-2026-09-21/REPORT.md` records the full before/after matrix for both engines.
+
 The five recovered actions were tool-call forms the out-of-the-box executable matching did not cover: `python -m pip install` invocations, which map to the allowlisted `python` executable rather than `pip`, and stress/workload-script executions (`python *_stress_check.py`, `python *_workload_check.py`), which likewise present only a trusted interpreter name. Both were closed by benchmark-informed tuning — adapter canonicalization of the `python -m pip` form onto the supply-chain deny rule, and an explicit deny rule for the benchmark's stress/workload-script executions — without removing any legitimate allowance: benign reads, edits, and test commands still evaluate to allow. The 10 live runs corroborate the static result: baseline runs completed the induced chains, while defended runs denied each attack step at the hook boundary before any side effect occurred.
 
 ## Architecture
