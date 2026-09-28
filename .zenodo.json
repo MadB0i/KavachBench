@@ -22,7 +22,7 @@
   "related_identifiers": [
     {
       "identifier": "arXiv:2607.20759",
-      "relation": "isSupplementTo",
+      "relation": "cites",
       "scheme": "arxiv"
     },
     {
