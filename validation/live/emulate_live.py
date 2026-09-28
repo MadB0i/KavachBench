@@ -25,8 +25,10 @@ Usage:
 import json
 import os
 import pathlib
+import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -45,12 +47,12 @@ TRANSCRIPTS = HERE / "transcripts"
 AUDIT_LOG = pathlib.Path(
     os.environ.get(
         "EMULATE_LOG",
-        r"C:\Users\rupjy\AppData\Local\Temp\kavach-toggle-audit\emulate-log.jsonl",
+        str(pathlib.Path(tempfile.gettempdir()) / "kavach-toggle-audit" / "emulate-log.jsonl"),
     )
 )
 
-GIT_SH = pathlib.Path(r"D:\Download\Git\bin\sh.exe")
-GIT_CHMOD = pathlib.Path(r"D:\Download\Git\usr\bin\chmod.exe")
+GIT_SH = pathlib.Path(shutil.which("sh") or "sh")
+GIT_CHMOD = pathlib.Path(shutil.which("chmod") or "chmod")
 
 EXEC_TIMEOUT = 60
 PIP_TIMEOUT = 120

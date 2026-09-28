@@ -19,8 +19,8 @@ VirtualBox runs on any edition and provides a clean, disposable Windows VM.
 ```powershell
 # 1. Download Windows ISO (e.g., Win11_23H2_x64.iso) and note its path
 # 2. Run setup (as Admin):
-cd D:\Projects\KavachBench\validation\live\virtualbox
-.\setup-vm.ps1 -IsoPath "D:\ISOs\Win11_23H2_x64.iso" -GuestUser "sandbox" -GuestPass "<disposable-password>"
+cd validation\live\virtualbox
+.\setup-vm.ps1 -IsoPath "<path-to>\Win11_23H2_x64.iso" -GuestUser "sandbox" -GuestPass "<disposable-password>"
 
 # 3. In the VM window that opens:
 #    - Complete Windows install (use the disposable account supplied above)
@@ -101,6 +101,6 @@ VBoxManage unregistervm "KavachBench-Sandbox" --delete
 - `C:\KavachBench` is a guest-local copy, not a host shared folder
 - Do not enable clipboard or drag/drop integration for validation
 - Network is disabled after provisioning by default; `-KeepNetwork` is unsafe for payload runs
-- `kavach.exe` must be built on host first: `cd D:/Projects/KAVACH && cargo build --release`
+- `kavach.exe` ships in the repository at `harness/kavach.exe`; to rebuild it from a sibling `KAVACH` checkout, run `cd <KAVACH> && cargo build --release` and copy `target/release/kavach.exe` over `harness/kavach.exe`
 - The manual-baseline log is at `analysis/manual-baseline-log.csv` inside the guest-local copy
 - `validation/live/kavach-state-log.jsonl` records each ON/OFF preflight

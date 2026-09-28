@@ -8,13 +8,13 @@
 
 .REQUIREMENTS
     - VM created and running with the guest-local project snapshot
-    - kavach.exe available at D:/Projects/KAVACH/target/release/kavach.exe
+    - kavach.exe available at harness/kavach.exe in the repository root
 #>
 param(
     [string]$VmName = "KavachBench-Sandbox",
     [string]$GuestUser,
     [string]$GuestPass,
-    [string]$HostKavachPath = "D:\Projects\KAVACH\target\release\kavach.exe",
+    [string]$HostKavachPath = (Join-Path $PSScriptRoot "..\..\..\harness\kavach.exe"),
     [string]$GuestProjectPath = "C:\KavachBench",
     [string]$SandboxNumber = "1",
     [ValidateSet("on", "off")]

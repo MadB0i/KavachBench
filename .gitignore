@@ -15,7 +15,27 @@ Thumbs.db
 __MACOSX/
 .vscode/
 .idea/
+System Volume Information/
 
 # Python bytecode caches
 __pycache__/
 *.pyc
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Secrets, credentials, and local agent/CLI config
+.env
+.env.*
+*.env
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*credentials*.json
+host-creds-*.json
+secrets.*
+.claude/settings.local.json
+.opencode/auth.json

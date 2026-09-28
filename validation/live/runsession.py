@@ -11,12 +11,30 @@ Usage:  python runsession.py <n>
 import json
 import os
 import pathlib
+import shutil
 import subprocess
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 
-CLAUDE = r"C:/Users/rupjy/AppData/Local/Claude-3p/claude-code/2.1.260/claude.exe"
+# Resolve the Claude Code CLI: env override first, then the normal per-user
+# install locations. No machine-specific path is hardcoded.
+def _find_claude():
+    override = os.environ.get("CLAUDE_BIN")
+    if override:
+        return override
+    name = "claude.exe" if os.name == "nt" else "claude"
+    found = shutil.which("claude")
+    if found:
+        return found
+    local = pathlib.Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "claude"
+    for cand in (local / name, local / "cli.exe", local / name.replace(".exe", ".cmd")):
+        if cand.exists():
+            return str(cand)
+    return name
+
+
+CLAUDE = _find_claude()
 
 
 def _host_auth_env():

@@ -1,7 +1,7 @@
 # Perturbation Analysis — IssueTrojanBench
 
 **Date:** 2026-09-07
-**Repo:** `D:/Projects/KavachBench`
+**Repo:** this repository (KavachBench)
 
 ## What the 29 perturbations actually vary
 

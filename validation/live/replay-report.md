@@ -48,8 +48,8 @@ tuned policy, driven by a scripted trace rather than a live model.
 
 ## Auth blocker (why not a live model session)
 
-The only installed Claude CLI is the desktop-bundled version at
-`C:/Users/rupjy/AppData/Local/Claude-3p/claude-code/2.1.260/claude.exe`.
+The only installed Claude CLI is the desktop-bundled version under
+`%LOCALAPPDATA%\Claude-3p\claude-code\<version>\claude.exe`.
 Its host-relay (localhost:20128, omniroute) is session-locked: child CLI
 processes receive `402 This model requires an opencode API key` regardless
 of which token is passed. To unblock live headless sessions, the user must

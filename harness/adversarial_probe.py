@@ -21,7 +21,7 @@ import yaml
 HERE = pathlib.Path(__file__).resolve().parent
 FIXTURES = HERE / "fixtures" / "adversarial"
 REPORT = HERE / "adversarial-report.md"
-KAVACH_BIN = os.environ.get("KAVACH_BIN", r"D:/Projects/KAVACH/target/release/kavach.exe")
+KAVACH_BIN = os.environ.get("KAVACH_BIN", str(HERE / "kavach.exe"))
 KAVACH_POLICY = os.environ.get("KAVACH_POLICY", str(HERE / "policy.kavachbench.toml"))
 
 SUBJECT = {

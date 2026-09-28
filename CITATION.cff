@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+title: >-
+  KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime Against
+  Real Prompt-Injection Tool-Call Attacks
+message: >-
+  If you use this software or the results it produces, please cite it using
+  the metadata from this file.
+type: software
+authors:
+  - given-names: Rupjyoti
+    family-names: Talukdar
+    affiliation: Independent Researcher
+    # TODO: add the author's ORCID iD before the first Zenodo release
+    orcid: "https://orcid.org/TODO"
+repository-code: "https://github.com/MadB0i/KavachBench"
+url: "https://github.com/MadB0i/KavachBench"
+abstract: >-
+  KavachBench is a research-evaluation harness that measures how well Kavach,
+  a Rust zero-trust policy-enforcement runtime for AI-agent tool calls, blocks
+  real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine
+  attack tool-call actions across 4 categories, plus benign controls. The
+  out-of-the-box policy blocks 37 of 42 actions (88%); after iterative,
+  benchmark-informed policy tuning it blocks 42 of 42 (100%), corroborated by
+  10 paired baseline-vs-defended live agent runs.
+keywords:
+  - prompt injection
+  - AI agents
+  - coding agents
+  - policy enforcement
+  - benchmark
+  - cs.CR
+license: Apache-2.0
+version: 1.0.0
+date-released: "2026-09-28"
+references:
+  - type: article
+    title: "IssueTrojanBench"
+    authors:
+      - family-names: Singh
+        given-names: null
+      - family-names: Yang
+        given-names: null
+      - family-names: Chen
+        given-names: null
+    journal: arXiv
+    year: 2026
+    identifiers:
+      - type: other
+        value: "arXiv:2607.20759"
+        description: "arXiv preprint identifier"
+    notes: >-
+      Authors as recorded for the IssueTrojanBench preprint; given names were
+      not available at the time this file was generated.

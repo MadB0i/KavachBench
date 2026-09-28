@@ -1,7 +1,7 @@
 # Live Validation Scenarios — empirically observed hook enforcement
 
 **Date:** 2026-09-07 (updated 2026-09-12 for tuned policy `12ae6b3`)
-**Repo:** `D:/Projects/KavachBench`
+**Repo:** this repository (KavachBench)
 
 ## Purpose
 

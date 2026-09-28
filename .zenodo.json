@@ -1,0 +1,44 @@
+{
+  "title": "KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime Against Real Prompt-Injection Tool-Call Attacks",
+  "creators": [
+    {
+      "name": "Talukdar, Rupjyoti",
+      "affiliation": "Independent Researcher"
+    }
+  ],
+  "description": "KavachBench is a research-evaluation harness that measures how well Kavach — a Rust zero-trust policy-enforcement runtime for AI-agent tool calls — blocks real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine attack tool-call actions across 4 categories, plus benign controls. The out-of-the-box policy blocks 37 of 42 actions (88%); after iterative, benchmark-informed policy tuning it blocks 42 of 42 (100%), corroborated by 10 paired baseline-vs-defended live agent runs.",
+  "keywords": [
+    "prompt injection",
+    "AI agents",
+    "coding agents",
+    "policy enforcement",
+    "benchmark",
+    "cs.CR"
+  ],
+  "license": "Apache-2.0",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "arXiv:2607.20759",
+      "relation": "isSupplementTo",
+      "scheme": "arxiv"
+    },
+    {
+      "identifier": "https://github.com/software-artifacts/IssueTrojanBench",
+      "relation": "isDerivedFrom",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/MadB0i/KAVACH",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/MadB0i/KavachBench",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ]
+}

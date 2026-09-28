@@ -13,7 +13,7 @@
     - Internet access for Chocolatey/packages
 
 .EXAMPLE
-    .\setup-vm.ps1 -IsoPath "D:\ISOs\Win11_23H2_x64.iso" -GuestUser "sandbox" -GuestPass "<disposable-password>"
+    .\setup-vm.ps1 -IsoPath "<path-to>\Win11_23H2_x64.iso" -GuestUser "sandbox" -GuestPass "<disposable-password>"
 #>
 param(
     [Parameter(Mandatory=$true)]
@@ -23,7 +23,7 @@ param(
     [int]$MemoryMB = 8192,
     [int]$CpuCount = 4,
     [int]$DiskGB = 80,
-    [string]$HostProjectPath = "D:\Projects\KavachBench",
+    [string]$HostProjectPath = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path,
     [string]$GuestProjectPath = "C:\KavachBench",
     [string]$GuestUser,
     [string]$GuestPass,

@@ -1,7 +1,7 @@
 # Feasibility Notes — Can Kavach defend Claude Code against IssueTrojanBench?
 
 **Date:** 2026-09-07
-**Repo:** `D:/Projects/KavachBench` · **Kavach:** `D:/Projects/KAVACH` (v0.1.0, release build)
+**Repo:** this repository · **Kavach:** sibling `KAVACH` checkout (v0.1.0, release build)
 
 ## Verdict: YES — feasible. Kavach can hook into Claude Code's tool-call path.
 
@@ -164,7 +164,7 @@ The post-tuning 42-action inventory contains **no** action that still follows
 
 Two seeds (`hnf`, `riemann`) use `python -m pip install <pkg>` rather than bare
 `pip install`. Kavach's rule engine matches commands on the **first token only**
-([`engine.rs:356`](D:/Projects/KAVACH/crates/kavach-policy/src/engine.rs:356) —
+([`engine.rs:356`](https://github.com/MadB0i/KAVACH/blob/main/crates/kavach-policy/src/engine.rs#L356) —
 `executables` matching is exact string equality on `cmd.executable()`). The
 first token is `python`, which is in the dev-tools allowlist → **allowed.**
 
@@ -340,7 +340,7 @@ blocking action (a) at the file gate is sufficient.
 1. **Wire the hook into Claude Code** for real agent runs — already
    implemented and working in [`validation/live/mksandbox.py`](../validation/live/mksandbox.py)
    (writes `.claude/settings.json` with `PreToolUse` matcher `Bash|Write|Edit|Read`
-   → `python D:/Projects/KavachBench/harness/kavach_hook.py`; at run time,
+   → `python harness/kavach_hook.py`; at run time,
    `--dangerously-skip-permissions` makes the hook the sole gate). The equivalent
    `settings.json` for any project dir:
    ```json
@@ -349,7 +349,7 @@ blocking action (a) at the file gate is sufficient.
        "PreToolUse": [{
          "matcher": "Bash|Write|Edit|Read",
          "hooks": [{ "type": "command",
-                     "command": "python D:/Projects/KavachBench/harness/kavach_hook.py" }]
+                     "command": "python harness/kavach_hook.py" }]
        }]
      }
    }

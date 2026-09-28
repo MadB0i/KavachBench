@@ -2,7 +2,7 @@
 
 **Abstract.** KavachBench is a research-evaluation harness that measures how well Kavach — a Rust zero-trust policy-enforcement runtime for AI-agent tool calls — blocks real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine attack tool-call actions across 4 categories, plus benign controls.
 
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX) [![DOI: TODO](https://img.shields.io/badge/DOI-TODO-lightgrey.svg)](https://doi.org/TODO)
 
 ## Motivation
 
@@ -97,6 +97,8 @@ flowchart TD
 
 Source layout: `analysis/` (scoring and logs), `benchmarks/IssueTrojanBench/` (attack corpus), `harness/` (runners, hook adapter, policy, fixtures), `results/` (raw run outputs), `run-all-10.ps1` (live batch runner), `validation/live/` (sandbox definitions), `paper/` (paper draft).
 
+Prerequisites: Python 3.12 and PyYAML (`pip install pyyaml`) for the static runners and the dataset mapper; the prebuilt Kavach binary is committed at `harness/kavach.exe` and requires no Rust toolchain. To rebuild it from a sibling [Kavach](https://github.com/MadB0i/KAVACH) checkout, run `cargo build --release` there and copy `target/release/kavach.exe` over `harness/kavach.exe`. Every runner honours `KAVACH_BIN` and `KAVACH_POLICY` environment overrides; the live batch runner additionally needs the [OpenCode](https://opencode.ai) CLI on `PATH`.
+
 ```powershell
 # Static: 42-action corpus interception (expect 42/42 with tuned policy + adapter)
 python harness/run_subset.py
@@ -126,18 +128,34 @@ Dataset provenance: the fixtures derive from the 24 payload YAMLs in `benchmarks
 
 ## Citation
 
+If you use this software or the results it produces, please cite it using the
+metadata in [`CITATION.cff`](CITATION.cff).
+
 ```bibtex
 @misc{kavachbench2026,
   title         = {KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime
                    Against Real Prompt-Injection Tool-Call Attacks},
-  author        = {{KavachBench contributors}},
+  author        = {Talukdar, Rupjyoti},
   year          = {2026},
   eprint        = {XXXX.XXXXX},
   archivePrefix = {arXiv},
   primaryClass  = {cs.CR},
   note          = {arXiv submission in progress, pending endorsement}
 }
+
+@software{kavachbench_zenodo,
+  author    = {Talukdar, Rupjyoti},
+  title     = {KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime
+               Against Real Prompt-Injection Tool-Call Attacks},
+  year      = {2026},
+  version   = {1.0.0},
+  publisher = {Zenodo},
+  doi       = {TODO}
+}
 ```
+
+**Zenodo DOI:** `TODO` — replace with the DOI minted from the first GitHub
+release (`10.5281/zenodo.<record>`), and replace the badge placeholder on line 5.
 
 Paper draft: `paper/KavachBench.tex` (3 figures). Replace `XXXX.XXXXX` with the assigned identifier once the arXiv submission (cs.CR) clears endorsement.
 
