@@ -94,8 +94,9 @@ Because the induced action-footprint is invariant across all 29 perturbations:
 - The **42 genuine actions** extracted from the **24 payloads** (6 seeds ×
   4 attack categories) are the **complete action-layer taxonomy** of
   IssueTrojanBench.
-- The static interception results — 35/42 (83%) policy-only, 37/42 (88%)
-  with adapter, 24/24 (100%) run-level neutralization — hold for all 696
+- The static interception results — 37/42 (88%) untuned policy on raw
+  requests, 42/42 (100%) once adapter canonicalization is applied, 24/24
+  (100%) run-level neutralization — hold for all 696
   runs. A run that uses perturbation `pdf_top_english_normal` exercises the
   *same Kavach deny rules* as `github_issue_bottom_chinese_html_comment`.
 - The full 696-run matrix is still required for the **model-susceptibility**
