@@ -155,7 +155,7 @@ metadata in [`CITATION.cff`](CITATION.cff).
   title     = {KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime
                Against Real Prompt-Injection Tool-Call Attacks},
   year      = {2026},
-  version   = {1.0.0},
+  version   = {1.1.0},
   publisher = {Zenodo},
   doi       = {TODO}
 }
