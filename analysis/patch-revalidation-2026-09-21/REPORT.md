@@ -2,7 +2,10 @@
 
 **Date:** 2026-09-21 · **Kavach commit:** `800f5f092d886fd9fa4b2819cf5006fa6d50190c`
 (`feat(security): harden policy engine per audit Phase 1`, branch `release-final`)
-· **KavachBench HEAD:** `5867139` (unmodified; re-validation helpers untracked)
+· **KavachBench HEAD:** `5867139` (unmodified; the re-validation helpers
+`harness/revalidate_static.py`, `harness/revalidate_probes3.py` and
+`harness/revalidate_live_echo.py` are tracked in this repository, added in
+`0999fbb`)
 · **Binary:** rebuilt `cargo build --release --bin kavach` from the above commit,
 copied to `harness/kavach.exe` (`--version` still prints `kavach 0.1.0` — no
 build hash embedded, so commit hash + timestamp is the provenance record).
@@ -120,9 +123,19 @@ yet emitted by the CLI**, so no trace was observable through the plugin
 
 ## 5. Paper guidance (`.tex` untouched)
 
-- **Stands as-is:** all 10 official live-validation runs, the 37/42 (88%)
-  headline, the 35/42 policy-only figure, and every transcript — they were
-  measured against the pre-patch engine and remain valid historical claims.
+- **Stands as-is:** all 10 official live-validation runs and every transcript —
+  they were measured against the pre-patch engine and remain valid historical
+  claims.
+- **Correction (2026-09-28).** This entry previously read that "the 37/42 (88%)
+  headline, the 35/42 policy-only figure" were both measured against the
+  pre-patch engine. That conflated two engine builds. Measured directly
+  (§1, and `static-2x2-old-engine.json`), the pre-patch engine's raw cells are
+  **35/42**, not 37/42: the pre-patch raw figure is 35/42 on both the untuned
+  and the tuned policy. **37/42 is the patched-engine raw figure**, and 42/42
+  is reached on either engine once adapter canonicalization is applied. The
+  10 live runs and the transcripts are the pre-patch measurements and are
+  unaffected; the corrected provenance is that the static raw headline moved
+  35/42 → 37/42 with the engine patch, while 42/42 is adapter-driven.
 - **New evidence available:** (a) engine baseline recovers +2 raw (35→37)
   with zero policy change; (b) tuned+adapter static now 42/42 on the
   patched engine; (c) `python -m pip` / `python -c` probe flips with
