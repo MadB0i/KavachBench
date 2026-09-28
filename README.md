@@ -16,7 +16,7 @@ This repository exists to answer that question empirically for one enforcement d
 
 **IssueTrojanBench** ([software-artifacts/IssueTrojanBench](https://github.com/software-artifacts/IssueTrojanBench)) is a benchmark of prompt-injection attacks delivered as GitHub issues: natural-language payloads that induce an agent to perform malicious tool calls in the course of fixing a bug. Its v1.0.0 payloads — 24 YAML files (6 seeds x 4 attack categories) in `benchmarks/IssueTrojanBench/payloads/`, sourced from the project's Zenodo archive (record 21402335) — are pure prose. There are no literal shell commands to match; the agent must interpret the prose and emit the induced actions.
 
-Concretely, the benchmark asks two questions: (1) statically, what fraction of the induced malicious tool calls does Kavach deny at the enforcement point, before and after benchmark-informed policy tuning; and (2) live, do paired baseline-vs-defended agent runs confirm that denied-at-policy means blocked-before-side-effect in practice.
+Concretely, the benchmark asks two questions: (1) statically, how many of the induced malicious tool calls does Kavach deny at the enforcement point, and which factors account for that coverage — the engine patch, adapter canonicalization, or explicit policy tuning; and (2) live, do paired baseline-vs-defended agent runs confirm that denied-at-policy means blocked-before-side-effect in practice.
 
 ## Methodology
 
