@@ -88,9 +88,9 @@ flowchart TD
 
 *Terminal output of a real blocked attack, showing the Kavach deny decision.*
 
-![Chart rendering the before/after results table: 37/42 blocked out-of-the-box versus 42/42 after tuning](docs/screenshots/02-before-after-chart.png)
+![Grouped bar chart of the 2x2 static matrix by policy, adapter and engine: pre-patch engine 35/42 on raw requests and 42/42 with adapter canonicalization, patched engine 37/42 raw and 42/42 with adapter, identical for untuned and tuned policy](docs/screenshots/02-before-after-chart.png)
 
-*Chart of the before/after results: 37/42 blocked out-of-the-box versus 42/42 after tuning.*
+*Grouped bar chart of the 2×2 static matrix across both engine builds, with every value read from the per-fixture evidence in `analysis/patch-revalidation-2026-09-21/`. Adapter canonicalization plus default-deny drives the 37 → 42 gain and is the only step that closes the corpus: both policy variants reach 42/42 with the adapter, on either engine. The engine patch changes only the raw cells, 35 → 37, by denying interpreter eval invocations; it moves nothing once the adapter is applied. Regenerate with `python analysis/make_before_after_chart.py`.*
 
 ![Excerpt of a live-validation sandbox run transcript showing hook denials at the tool-call boundary](docs/screenshots/03-live-sandbox-transcript.png)
 
