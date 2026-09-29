@@ -157,7 +157,7 @@ metadata in [`CITATION.cff`](CITATION.cff).
                Enforcement Against Issue-Based Prompt Injection in AI Coding
                Agents},
   year      = {2026},
-  version   = {1.1.0},
+  version   = {1.2.0},
   publisher = {Zenodo},
   doi       = {TODO}
 }
