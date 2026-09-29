@@ -102,7 +102,7 @@ flowchart TD
 
 ## Reproducing the results
 
-Source layout: `analysis/` (scoring and logs), `benchmarks/IssueTrojanBench/` (attack corpus), `harness/` (runners, hook adapter, policy, fixtures), `results/` (raw run outputs), `run-all-10.ps1` (live batch runner), `validation/live/` (sandbox definitions), `paper/` (paper draft).
+Source layout: `analysis/` (scoring and logs), `benchmarks/IssueTrojanBench/` (attack corpus), `harness/` (runners, hook adapter, policy, fixtures), `results/` (raw run outputs), `run-all-10.ps1` (live batch runner), `validation/live/` (sandbox definitions), `paper/` (the full paper: [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex)).
 
 Prerequisites: Python 3.12 and PyYAML (`pip install pyyaml`) for the static runners and the dataset mapper; the prebuilt Kavach binary is committed at `harness/kavach.exe` and requires no Rust toolchain. To rebuild it from a sibling [Kavach](https://github.com/MadB0i/KAVACH) checkout, run `cargo build --release` there and copy `target/release/kavach.exe` over `harness/kavach.exe`. Every runner honours `KAVACH_BIN` and `KAVACH_POLICY` environment overrides; the live batch runner additionally needs the [OpenCode](https://opencode.ai) CLI on `PATH`.
 
@@ -124,7 +124,7 @@ python analysis/summarize_manual.py analysis/manual-baseline-log.csv
 powershell -NoProfile -ExecutionPolicy Bypass -File run-all-10.ps1
 ```
 
-Dataset provenance: the fixtures derive from the 24 payload YAMLs in `benchmarks/IssueTrojanBench/payloads/` (IssueTrojanBench v1.0.0, Zenodo record 21402335); the extraction mapping is `harness/map_dataset.py` with its output manifest in `harness/inventory.json`. Post-patch engine re-validation evidence is in `analysis/patch-revalidation-2026-09-21/REPORT.md` with raw data in the same directory. The accompanying paper draft is `paper/KavachBench.tex` (3 figures); its arXiv submission (cs.CR) is in progress pending endorsement, linked as a placeholder until the identifier is assigned.
+Dataset provenance: the fixtures derive from the 24 payload YAMLs in `benchmarks/IssueTrojanBench/payloads/` (IssueTrojanBench v1.0.0, Zenodo record 21402335); the extraction mapping is `harness/map_dataset.py` with its output manifest in `harness/inventory.json`. Post-patch engine re-validation evidence is in `analysis/patch-revalidation-2026-09-21/REPORT.md` with raw data in the same directory. The accompanying paper is available as [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex) (3 figures); its arXiv submission (cs.CR) is in progress pending endorsement, linked as a placeholder until the identifier is assigned.
 
 ## Limitations
 
@@ -164,7 +164,7 @@ metadata in [`CITATION.cff`](CITATION.cff).
 **Zenodo DOI:** `TODO` — replace with the DOI minted from the first GitHub
 release (`10.5281/zenodo.<record>`), and replace the badge placeholder on line 5.
 
-Paper draft: `paper/KavachBench.tex` (3 figures). Replace `XXXX.XXXXX` with the assigned identifier once the arXiv submission (cs.CR) clears endorsement.
+Paper: [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex) (3 figures). Replace `XXXX.XXXXX` with the assigned identifier once the arXiv submission (cs.CR) clears endorsement.
 
 ## Acknowledgments
 
