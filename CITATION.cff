@@ -10,8 +10,7 @@ authors:
   - given-names: Rupjyoti
     family-names: Talukdar
     affiliation: Independent Researcher
-    # TODO: add the author's ORCID iD before the first Zenodo release
-    orcid: "https://orcid.org/TODO"
+    orcid: "https://orcid.org/0009-0003-4755-2531"
 repository-code: "https://github.com/MadB0i/KavachBench"
 url: "https://github.com/MadB0i/KavachBench"
 abstract: >-
