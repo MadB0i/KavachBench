@@ -6,7 +6,7 @@
       "affiliation": "Independent Researcher"
     }
   ],
-  "description": "KavachBench is a research-evaluation harness that measures how well Kavach — a Rust zero-trust policy-enforcement runtime for AI-agent tool calls — blocks real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine attack tool-call actions across 4 categories, plus benign controls. The out-of-the-box policy blocks 37 of 42 actions (88%); after iterative, benchmark-informed policy tuning it blocks 42 of 42 (100%), corroborated by 10 paired baseline-vs-defended live agent runs.",
+  "description": "KavachBench is a research-evaluation harness that measures how well Kavach — a Rust zero-trust policy-enforcement runtime for AI-agent tool calls — blocks real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine attack tool-call actions across 4 categories, plus benign controls. The out-of-the-box policy blocks 37 of 42 actions (88%); the remaining 5 are closed by adapter canonicalization under default-deny (100%), not by policy tuning: explicit policy tuning adds rule-level audit attribution only, not additional coverage. Corroborated by 10 paired baseline-vs-defended live agent runs.",
   "keywords": [
     "prompt injection",
     "AI agents",

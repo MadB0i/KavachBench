@@ -46,11 +46,13 @@ Each sandbox is run twice — once with the Kavach hook disabled (baseline) and 
 
 ## Results
 
-| Configuration (policy × adapter × engine) | Blocked | Rate |
-|---|---|---|
-| Untuned policy, raw requests, patched engine | 37 / 42 | 88% |
-| Tuned policy + adapter canonicalization, patched engine | 42 / 42 | 100% |
-| *(reference)* Untuned policy, raw requests, pre-patch engine | 35 / 42 | 83% |
+| Policy | Request form | Engine | Blocked | Rate |
+|---|---|---|---|---|
+| Untuned | Raw | Patched | 37/42 | 88% |
+| Untuned | Adapter-canonicalized | Patched | 42/42 | 100% |
+| Tuned | Raw | Patched | 37/42 | 88% |
+| Tuned | Adapter-canonicalized | Patched | 42/42 | 100% |
+| *(reference)* Untuned | Raw | Pre-patch | 35/42 | 83% |
 
 The 37 → 42 gain is **adapter canonicalization, not policy tuning**. The adapter maps the benchmark's known command forms onto names the policy resolves differently — `python -m pip install …` onto the supply-chain deny rule, and `python *_stress_check.py` / `python *_workload_check.py` onto a name no rule lists, which default-deny then blocks. Both policy variants reach 42/42 once the adapter is applied, so the tuning rule for stress/workload-script execution adds no coverage; it contributes **rule-level audit attribution** instead: with the untuned policy those five denials match no rule and are recorded as a bare default-deny, whereas the tuned policy records the explicit `deny-resource-exhaustion-command` rule. No legitimate allowance is removed either way — benign reads, edits, and test commands still evaluate to allow.
 
@@ -163,8 +165,9 @@ metadata in [`CITATION.cff`](CITATION.cff).
 }
 ```
 
-**Zenodo DOI:** `TODO` — replace with the DOI minted from the first GitHub
-release (`10.5281/zenodo.<record>`), and replace the badge placeholder on line 5.
+**Zenodo DOI:** `TODO` — replace with the DOI minted from the current archived
+release (v1.2.0) (`10.5281/zenodo.<record>`), and replace the badge placeholder
+on line 5.
 
 Paper: [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex) (3 figures). Replace `XXXX.XXXXX` with the assigned identifier once the arXiv submission (cs.CR) clears endorsement.
 
