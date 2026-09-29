@@ -140,8 +140,9 @@ metadata in [`CITATION.cff`](CITATION.cff).
 
 ```bibtex
 @misc{kavachbench2026,
-  title         = {KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime
-                   Against Real Prompt-Injection Tool-Call Attacks},
+  title         = {KavachBench: An Empirical Evaluation of Deterministic
+                   Policy Enforcement Against Issue-Based Prompt Injection in
+                   AI Coding Agents},
   author        = {Talukdar, Rupjyoti},
   year          = {2026},
   eprint        = {XXXX.XXXXX},
@@ -152,8 +153,9 @@ metadata in [`CITATION.cff`](CITATION.cff).
 
 @software{kavachbench_zenodo,
   author    = {Talukdar, Rupjyoti},
-  title     = {KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime
-               Against Real Prompt-Injection Tool-Call Attacks},
+  title     = {KavachBench: An Empirical Evaluation of Deterministic Policy
+               Enforcement Against Issue-Based Prompt Injection in AI Coding
+               Agents},
   year      = {2026},
   version   = {1.1.0},
   publisher = {Zenodo},

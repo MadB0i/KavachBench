@@ -47,6 +47,13 @@
 
 \usepackage{xurl}
 
+\title{KavachBench: An Empirical Evaluation of Deterministic Policy Enforcement Against Issue-Based Prompt Injection in AI Coding Agents}
+
+\hypersetup{
+    pdftitle={KavachBench: An Empirical Evaluation of Deterministic Policy Enforcement Against Issue-Based Prompt Injection in AI Coding Agents},
+    pdfauthor={Rupjyoti Talukdar}
+}
+
 % ------------------------------------------------------------
 % Section styling
 % ------------------------------------------------------------
@@ -211,9 +218,9 @@ builds. A controlled re-validation across engine build, policy, and adapter
 mode attributes this gain to adapter canonicalization under default-deny;
 corpus-specific rules changed which rule fired, not what was blocked. We
 treat 42/42 as corpus-specific coverage rather than evidence of
-generalization to unseen attacks. Across 22 adversarial probes, no genuine
-policy bypass was
-identified under the evaluated configuration. Mechanism-level trace replay
+generalization to unseen attacks. Across 22 adversarial probes run on the pre-patch engine, no genuine
+policy bypass was identified; re-running them on the patched engine changes
+one verdict. Mechanism-level trace replay
 confirmed direct command-level enforcement. In live-agent evaluation, four
 clean comparisons were retained after one scenario was excluded because of
 confirmed cross-run sandbox contamination. In three of the four retained
@@ -548,7 +555,7 @@ Table~\ref{tab:static2x2} reports blocked actions out of 42 for each cell.
 Coverage of the full 42-action corpus was reached whenever the adapter
 canonicalized requests, on both engine builds and with both policies. The
 corpus-informed policy added an explicit rule for script-execution patterns
-such as \texttt{*\_workload\_check.py}, but this changed only which rule
+such as \texttt{*\_workload\_\allowbreak check.py}, but this changed only which rule
 produced the denial (an audit-attribution difference), not whether the action
 was denied. The 42/42 figure is therefore reported as corpus-specific
 coverage, not as an estimate of generalization to unseen attacks.
@@ -590,8 +597,8 @@ policy chain should operate, scripted tool-call traces were replayed through
 the real hook adapter and operating-system subprocess path rather than
 through a live model.
 
-After policy refinement, the evaluated scenarios were denied directly at the
-command level. An earlier hypothesized mechanism in which a denied file
+After policy refinement, the evaluated scenarios, replayed on the pre-patch
+engine, were denied directly at the command level. An earlier hypothesized mechanism in which a denied file
 creation would subsequently result in an execution failure such as
 \texttt{ENOENT} was therefore not the operative mechanism for these
 post-refinement scenarios.
@@ -644,8 +651,7 @@ and mechanism-level results.
     form, and engine build.}
     \label{tab:static2x2}
 
-    \resizebox{\textwidth}{!}{%
-    \begin{tabular}{@{}lrr@{}}
+        \begin{tabular}{@{}lrr@{}}
         \toprule
         \textbf{Policy} & \textbf{Request form} &
         \textbf{Pre-patch $\rightarrow$ patched} \\
@@ -655,8 +661,7 @@ and mechanism-level results.
         Corpus-informed   & Raw (as issued by agent) & 35/42 $\rightarrow$ 37/42 \\
         Corpus-informed   & Adapter-canonicalized  & 42/42 $\rightarrow$ 42/42 \\
         \bottomrule
-    \end{tabular}%
-    }
+    \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
@@ -827,14 +832,17 @@ moves exactly two of the 42 actions, the \texttt{python -m pip install} pair,
 and only in the raw (non-canonicalized) cells; the canonicalized cells are
 unchanged.
 
-Because these hardening phases post-date the evaluation, the 42/42 static
-figure is not a held-out measurement. The static corpus also cannot
-demonstrate the patch's benefit, because it saturates at 42/42 on both engine
-builds once requests are canonicalized. Evidence for the patch instead comes
-from cases outside this corpus: the adversarial probes, where the
-\texttt{python -m pip} and \texttt{python -c} probes flip from allow to deny
-under \texttt{baseline-dangerous-interpreter}, and the shell-redirection probe,
-which Phase~1b closes.
+Because both phases came after the measurements, the 42/42 static figure is
+not a held-out result. The static corpus also cannot show what the patch
+buys, since it already saturates at 42/42 once requests are canonicalized.
+The evidence for the patch has to come from elsewhere. Among the 22
+adversarial probes, exactly one verdict changes: \texttt{python -m pip
+install}, which the Phase~1 baseline rule now denies. The other two
+behaviors the patch targets, interpreter evaluation flags such as
+\texttt{python -c} and shell redirection such as \texttt{echo '...' >
+file}, were checked with a separate six-command differential across
+builds. In that differential Phase~1 denies \texttt{python -c} but still
+allows the redirection, and Phase~1b denies both.
 
 % ============================================================
 % 7. DISCUSSION
@@ -974,8 +982,10 @@ live run itself was not repeated on it.
 \medskip
 
 \textbf{Post-hoc hardening.}
-The engine and the policy were both improved after results on this corpus had
-been observed. The 42/42 figure is therefore not a held-out measurement.
+The corpus-informed policy was refined with knowledge of this corpus, and
+the engine was hardened in two phases after the measurements reported here
+were made (Section~\ref{sec:patch}). The 42/42 figure is therefore not a
+held-out measurement.
 
 \medskip
 
@@ -1028,8 +1038,8 @@ not byte-reproducible on the build host. The commits \texttt{800f5f0},
 indistinguishable from \texttt{dff0538} on all six probes, and the later ones do
 not touch the policy engine, so the vendored binary cannot be attributed to
 \texttt{dff0538} uniquely; \texttt{dff0538} is the earliest consistent
-attribution rather than a proven one. Archived release: KavachBench v1.1.0,
-DOI \texttt{[TODO after Zenodo]}.
+attribution rather than a proven one. Archived release: KavachBench v1.1.0 on Zenodo; the DOI is listed in the
+repository README and in \texttt{CITATION.cff}.
 
 The study intentionally reports weaknesses discovered during evaluation as
 part of the primary findings. In particular, the argument-blind command

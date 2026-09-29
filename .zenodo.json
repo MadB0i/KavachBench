@@ -1,5 +1,5 @@
 {
-  "title": "KavachBench: Benchmarking a Zero-Trust Policy-Enforcement Runtime Against Real Prompt-Injection Tool-Call Attacks",
+  "title": "KavachBench: An Empirical Evaluation of Deterministic Policy Enforcement Against Issue-Based Prompt Injection in AI Coding Agents",
   "creators": [
     {
       "name": "Talukdar, Rupjyoti",
