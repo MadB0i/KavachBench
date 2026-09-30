@@ -200,7 +200,7 @@ metadata in [`CITATION.cff`](CITATION.cff).
 </details>
 
 **Zenodo DOI:** `TODO` — replace with the DOI minted from the current archived
-release (v1.2.0) (`10.5281/zenodo.<record>`), and replace the badge placeholder
+release (v1.2.1) (`10.5281/zenodo.<record>`), and replace the badge placeholder
 on line 5.
 
 Paper: [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex) (3 figures). Replace `XXXX.XXXXX` with the assigned identifier once the arXiv submission (cs.CR) clears endorsement.
