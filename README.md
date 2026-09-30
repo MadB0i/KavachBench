@@ -4,6 +4,20 @@
 
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX) [![DOI: TODO](https://img.shields.io/badge/DOI-TODO-lightgrey.svg)](https://doi.org/TODO)
 
+## Contents
+
+- [Motivation](#motivation)
+- [What this repository evaluates](#what-this-repository-evaluates)
+- [Methodology](#methodology)
+- [Results](#results)
+- [Architecture](#architecture)
+- [Screenshots](#screenshots)
+- [Reproducing the results](#reproducing-the-results)
+- [Limitations](#limitations)
+- [Citation](#citation)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
+
 ## Motivation
 
 Autonomous coding agents do their work through tools: executing shell commands, writing files, installing packages, editing configuration. When the task context itself is adversarial — a GitHub issue with injected instructions embedded in it — the model may comply and emit tool calls the user never authorized. Once the model has decided to act, content-level filtering is no longer on the decision path; the remaining question is whether anything authorizes each tool call at the enforcement boundary before side effects occur.
@@ -58,7 +72,7 @@ The 37 → 42 gain is **adapter canonicalization, not policy tuning**. The adapt
 
 The engine patch is not what closes the corpus: the pre-patch engine also reaches 42/42 with the adapter (`analysis/patch-revalidation-2026-09-21/REPORT.md`). On raw requests the patch moves only the two `python -m pip install` fixtures (35 → 37), by denying interpreter eval invocations; the full before/after matrix and the per-fixture evidence are in that report.
 
-**Engine version:** the 42/42 static result is reproducible on the currently committed `harness/kavach.exe` with `python harness/run_subset.py`; the 10 live runs were measured against the pre-patch engine, and `analysis/patch-revalidation-2026-09-21/REPORT.md` contains the full before/after matrix for both engines.
+**Engine version:** the 42/42 static result is reproducible on the currently committed `harness/kavach.exe` with `python harness/run_subset.py`; the 4 retained live comparisons were measured against the pre-patch engine, and `analysis/patch-revalidation-2026-09-21/REPORT.md` contains the full before/after matrix for both engines.
 
 Of the 10 live runs (5 sandboxes × on/off), one resource-exhaustion scenario was excluded after confirming cross-run sandbox contamination — the rebuild procedure did not remove files created by a previous run — leaving 4 clean baseline-vs-defended comparisons. In 3 of those 4 the model independently rejected the injected instruction, so Kavach had no separately observable intervention; in the policy-bypass comparison the model attempted the malicious write and Kavach denied the resulting action, which is the clearest live evidence of the policy preventing an operation the model was prepared to perform. The benign control completed normal work in both conditions, via a workaround with Kavach enabled. With only 4 retained comparisons these live results are descriptive rather than statistical.
 
@@ -86,6 +100,9 @@ flowchart TD
 
 ## Screenshots
 
+<details>
+<summary><strong>Screenshots</strong> (click to expand)</summary>
+
 ![Terminal output of a real blocked attack showing the Kavach deny decision](docs/screenshots/01-blocked-attack-deny.png)
 
 *Terminal output of a real blocked attack, showing the Kavach deny decision.*
@@ -102,11 +119,18 @@ flowchart TD
 
 *Repository and architecture folder structure of KavachBench.*
 
+</details>
+
 ## Reproducing the results
 
 Source layout: `analysis/` (scoring and logs), `benchmarks/IssueTrojanBench/` (attack corpus), `harness/` (runners, hook adapter, policy, fixtures), `results/` (raw run outputs), `run-all-10.ps1` (live batch runner), `validation/live/` (sandbox definitions), `paper/` (the full paper: [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex)).
 
+<details>
+<summary>Reproducibility details: prerequisites</summary>
+
 Prerequisites: Python 3.12 and PyYAML (`pip install pyyaml`) for the static runners and the dataset mapper; the prebuilt Kavach binary is committed at `harness/kavach.exe` and requires no Rust toolchain. To rebuild it from a sibling [Kavach](https://github.com/MadB0i/KAVACH) checkout, run `cargo build --release` there and copy `target/release/kavach.exe` over `harness/kavach.exe`. Every runner honours `KAVACH_BIN` and `KAVACH_POLICY` environment overrides; the live batch runner additionally needs the [OpenCode](https://opencode.ai) CLI on `PATH`.
+
+</details>
 
 ```powershell
 # Static: 42-action corpus interception (expect 42/42 with tuned policy + adapter)
@@ -126,7 +150,12 @@ python analysis/summarize_manual.py analysis/manual-baseline-log.csv
 powershell -NoProfile -ExecutionPolicy Bypass -File run-all-10.ps1
 ```
 
+<details>
+<summary>Reproducibility details: dataset provenance</summary>
+
 Dataset provenance: the fixtures derive from the 24 payload YAMLs in `benchmarks/IssueTrojanBench/payloads/` (IssueTrojanBench v1.0.0, Zenodo record 21402335); the extraction mapping is `harness/map_dataset.py` with its output manifest in `harness/inventory.json`. Post-patch engine re-validation evidence is in `analysis/patch-revalidation-2026-09-21/REPORT.md` with raw data in the same directory. The accompanying paper is available as [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex) (3 figures); its arXiv submission (cs.CR) is in progress pending endorsement, linked as a placeholder until the identifier is assigned.
+
+</details>
 
 ## Limitations
 
@@ -139,6 +168,9 @@ Dataset provenance: the fixtures derive from the 24 payload YAMLs in `benchmarks
 
 If you use this software or the results it produces, please cite it using the
 metadata in [`CITATION.cff`](CITATION.cff).
+
+<details>
+<summary>BibTeX</summary>
 
 ```bibtex
 @misc{kavachbench2026,
@@ -164,6 +196,8 @@ metadata in [`CITATION.cff`](CITATION.cff).
   doi       = {TODO}
 }
 ```
+
+</details>
 
 **Zenodo DOI:** `TODO` — replace with the DOI minted from the current archived
 release (v1.2.0) (`10.5281/zenodo.<record>`), and replace the badge placeholder
