@@ -2,7 +2,7 @@
 
 **Abstract.** KavachBench is a research-evaluation harness that measures how well Kavach — a Rust zero-trust policy-enforcement runtime for AI-agent tool calls — blocks real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine attack tool-call actions across 4 categories, plus benign controls.
 
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX) [![DOI: TODO](https://img.shields.io/badge/DOI-TODO-lightgrey.svg)](https://doi.org/TODO)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23051491.svg)](https://doi.org/10.5281/zenodo.23051491)
 
 ## Contents
 
@@ -193,15 +193,13 @@ metadata in [`CITATION.cff`](CITATION.cff).
   year      = {2026},
   version   = {1.2.1},
   publisher = {Zenodo},
-  doi       = {TODO}
+  doi       = {10.5281/zenodo.23051491}
 }
 ```
 
 </details>
 
-**Zenodo DOI:** `TODO` — replace with the DOI minted from the current archived
-release (v1.2.1) (`10.5281/zenodo.<record>`), and replace the badge placeholder
-on line 5.
+**Zenodo DOI:** [10.5281/zenodo.23051491](https://doi.org/10.5281/zenodo.23051491)
 
 Paper: [PDF](paper/KavachBench.pdf) / [source](paper/KavachBench.tex) (3 figures). Replace `XXXX.XXXXX` with the assigned identifier once the arXiv submission (cs.CR) clears endorsement.
 
