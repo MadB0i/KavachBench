@@ -1,5 +1,8 @@
 # KavachBench
 
+[![Paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23051753.svg)](https://doi.org/10.5281/zenodo.23051753)
+[![Software DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23051491.svg)](https://doi.org/10.5281/zenodo.23051491)
+
 **Abstract.** KavachBench is a research-evaluation harness that measures how well Kavach — a Rust zero-trust policy-enforcement runtime for AI-agent tool calls — blocks real prompt-injection attacks from the IssueTrojanBench corpus: 42 genuine attack tool-call actions across 4 categories, plus benign controls.
 
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE) [![Rust 1.85+](https://img.shields.io/badge/rust-1.85%2B-orange.svg)](https://www.rust-lang.org) [![arXiv: pending](https://img.shields.io/badge/arXiv-pending-lightgrey.svg)](https://arxiv.org/abs/XXXX.XXXXX) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23051491.svg)](https://doi.org/10.5281/zenodo.23051491)
