@@ -60,7 +60,7 @@ The engine patch is not what closes the corpus: the pre-patch engine also reache
 
 **Engine version:** the 42/42 static result is reproducible on the currently committed `harness/kavach.exe` with `python harness/run_subset.py`; the 10 live runs were measured against the pre-patch engine, and `analysis/patch-revalidation-2026-09-21/REPORT.md` contains the full before/after matrix for both engines.
 
-The 10 live runs corroborate the static result: baseline runs completed the induced chains, while defended runs denied each attack step at the hook boundary before any side effect occurred.
+Of the 10 live runs (5 sandboxes × on/off), one resource-exhaustion scenario was excluded after confirming cross-run sandbox contamination — the rebuild procedure did not remove files created by a previous run — leaving 4 clean baseline-vs-defended comparisons. In 3 of those 4 the model independently rejected the injected instruction, so Kavach had no separately observable intervention; in the policy-bypass comparison the model attempted the malicious write and Kavach denied the resulting action, which is the clearest live evidence of the policy preventing an operation the model was prepared to perform. The benign control completed normal work in both conditions, via a workaround with Kavach enabled. With only 4 retained comparisons these live results are descriptive rather than statistical.
 
 ## Architecture
 
@@ -92,7 +92,7 @@ flowchart TD
 
 ![Grouped bar chart of the 2x2 static matrix by policy, adapter and engine: pre-patch engine 35/42 on raw requests and 42/42 with adapter canonicalization, patched engine 37/42 raw and 42/42 with adapter, identical for untuned and tuned policy](docs/screenshots/02-before-after-chart.png)
 
-*Grouped bar chart of the 2×2 static matrix across both engine builds, with every value read from the per-fixture evidence in `analysis/patch-revalidation-2026-09-21/`. Adapter canonicalization plus default-deny drives the 37 → 42 gain and is the only step that closes the corpus: both policy variants reach 42/42 with the adapter, on either engine. The engine patch changes only the raw cells, 35 → 37, by denying interpreter eval invocations; it moves nothing once the adapter is applied. Regenerate with `python analysis/make_before_after_chart.py`.*
+*Grouped bar chart of the 2×2 static matrix across both engine builds, with every value read from the per-fixture evidence in `analysis/patch-revalidation-2026-09-21/`. Adapter canonicalization plus default-deny drives the 37 → 42 gain and is the only step that closes the corpus: both policy variants reach 42/42 with the adapter, on either engine. The engine patch changes only the raw cells, 35 → 37, by denying interpreter eval invocations; it moves nothing once the adapter is applied. The pre-patch reference figure, 35/42, is not charted. Regenerate with `python analysis/make_before_after_chart.py`.*
 
 ![Excerpt of a live-validation sandbox run transcript showing hook denials at the tool-call boundary](docs/screenshots/03-live-sandbox-transcript.png)
 
